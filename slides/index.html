@@ -40,72 +40,283 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>Reveal.js</h1>
-					<h3>HTML Presentations Made Easy</h3>
+					<h1>Real Time Web Applications</h1>
+					<h3>With Node.js</h3>
+					<h4>Logan Allred &amp; Joel Thornton</h4>
 				</section>
+				<section>
+					<h3>Presenters</h3>
+					<p>
+						<i><small>Logan Allred-Front End Developer<a href="http://redbugz.com"> </a> / <a href="http://twitter.com/redbugz">allredlr@familysearch.org</a></small></i>
+					</p>
+					<p>
+						<i><small>Joel Thornton-Front End Developer<a href="http://thorntonjn@familysearch.com"></a> / <a href="http://twitter.com/redbugz">thorntonjn@familysearch.org</a></small></i>
+					</p>
+				</section>
+				<section>
+					<h2>Topic Covered</h2>
+					<ul>
+						<li>What is Realtime ?</li>
+						<li>Cool Demos</li>
+						<li>Tools Overview</li>
+						<li>Getting Started</li>
+						<li>What to Watch out for</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>What Is Real Time?</h2>
+					<ul>
+						<li>Persistent Connection</li>
+						<li>Shared Event Notification</li>
+						<li>Continuus Communication</li>
+					</ul>
+				</section>
+
+				<section>
+					<h1>Why is it Cool?</h1>
+					<ul>
+						<li>Live Fresh Data</li>
+						<li>Immediate Feedback</li>
+						<li>Minimal Connection Overhead</li>						
+						<li>Interactive and Engaging</li>
+					</ul>
+				</section>
+
+				<section>
+					<h1>Good Candidates</h1>
+					<ul>
+						<li>Live Monitoring Diagnostics and Statistics</li>
+						<li>Social Applications - Facebook's Newsfeed and Twitter </li>
+						<li>Multiplayer Games</li>
+						<li>Cooperative Sharing Applications</li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h2>Real-Time Samples</h2>
+						<p>
+							Real Time applications <a href="#/6/1">Demos</a>.
+						</p>
+						<!-- <a href="#/6/1" class="image">
+							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
+						</a> -->
+					</section>
+					<section>
+						<h2>Simple Chat</h2>
+						<p>Press down or up to navigate.</p>
+					</section>
+					<section>
+						<h2>Multiplayer Puzzle Game</h2>
+						<p>Cornify</p>
+					</section>
+				</section>
+
 				
 				<section>
-					<h2>Heads Up</h2>
-					<p>
-						reveal.js is a framework for easily creating beautiful presentations using HTML. You'll need a browser with 
-						support for CSS 3D transforms to see it in its full glory.
-					</p>
-					<p>
-						<i><small>- <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small></i>
-					</p>
+					<h2> Real-Time App Issues</h2>
+					<ul> 
+						<li>Building, Deploying and Maintaining Server-side Components</li>
+						<li>Different Browser Models
+							<ul>
+								<li>Requires additional Client Side JavaScript</li>
+							</ul>
+						</li>
+						<li>Slow Early Adoption
+							<ul><li>Mostly limited to financial services or Web Chat</li></ul>
+						</li>
+						<li>Lack of Available and Discoverable Data</li>
+					</ul>
+				</section>
+				<section>
+					<ul>
+					<li>Multiple Early Hacks <a class="image" href="CometMaturityGuide.png" target="_blank">
+								<img width="178" height="238" src="CometMaturityGuide.png" alt="Maturity Guide" style="-webkit-transform: rotate(360deg);float:right;">
+							</a>
+							<ul>
+								<li>Ajax Push</li>
+								<li>Reverse Ajax</li>
+								<li>Two-way-web</li>
+								<li>HTTP Streaming</li>
+								<li>HTTP server push</li>
+								<li>Long-held HTTP request </li>
+								<li>Long Polling</li>
+							</ul>
+						</li>
+						<!-- <li> -->
+							
+							
+						<!-- </li> -->
+					</ul>
+				</section>
+				<section><h3>Comet Basics</h3>
+					<ol><li>Open an Ajax Connection</li>
+						<li>Wait Until Data is Received</li>
+						<li>When Data Arrives Process Data And Repeat</li>
+						<li><pre><code contenteditable> function longPoll () {
+  $.ajax({
+    cache: false,
+    dataType: 'json',
+    type: "GET",
+    url: "/comet_server_url",
+    success: function (json) {
+      processData(json);
 
-					<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you run the speaker notes server.
-					</aside>
+      //create a new connection and repeat
+      longPoll_feed();
+    },
+	//wait for server, add 10 sec delay on error
+    error: function () { setTimeout(longPoll, 10*1000); }    
+});
+}
+					</code></pre></li>
+				</ol>
+				 </section>
+
+
+				<section>
+					<h2> Why Real-Time Apps Now</h2>
+					<ul> 
+						<li>Better Data 
+							<ul>
+								<li>Availability</li>
+								<li>Discoverability</li>
+								<li>Publish/Subscribe</li>
+							</ul>
+						</li>
+						<li>More Demanding Web Apps</li>
+						<li>Improved Standards - HTML5 WebSockets RealTime server and client(web browser) two way communication over a single connection.</li>
+						<li>Easier and More Maintainable Server components</li>
+
+					</ul>
+				</section>
+
+				<section>
+					<h2> Tools For Real-Time App Development</h2>
+					<section>
+					<ul> 
+						<li><h3>nodejs</h3></li>
+						<li><h3>SocketIO/SockJS</h3></li>
+						<li><h3>Multi-client synchronization models</h3></li>
+						<li><h3>Real-Time Development Frameworks</h3></li>
+					</ul>
+					</section>
+					<section>
+						<h1>Node.js</h1>
+						<ul>
+							<li><h3>Server Side Javascript</h3></li>
+							<li><h3>More Consistent Client-Server Synchronization</h3></li>
+							<li><h3>NPM</h3></li>
+							<li><h3>Easier & Faster Build & Deployment</h3></li>
+						<ul>
+					</section>
+					<section>
+						<h1>SOCKETIO/SOCKS</h1>
+						<ul>
+							<li><h3>Websocket API</h3></li>
+						<ul>
+					</section>
+					<section>
+						<h1>Meteor.js</h1>
+					</section>
+					<section>
+						<h1>Derby.js</h1>
+					</section>
+					<section>
+						<h1>Now.js</h1>
+					</section>
+					<section>
+						<h1>SockStream</h1>
+					</section>
+				</section>
+
+				<section>
+					<section>
+					<h2>Collaborative Merge DEMO</h2>
+					<ul> 
+						<li><h3>Framework and TOOLS We Chose</h3></li>
+						<li><h3>Server Code</h3></li>
+						<li><h3>Client Code</h3></li>
+						<li><h3>Testing</h3></li>
+						<li><h3>Build And Deploy</h3></li>
+					</ul>
+					</section>
+					<section>
+						<h1>Framework and Libraries</h1>
+						<ul>
+							<li>NodeJS</li>
+							<li><h3>Derby</h3></li>
+							<li><h3>Heroku</h3></li>
+						<ul>
+					</section>
+					<section>
+						<h2>Server Code</h2>
+					<pre><code contenteditable>
+function replacemeWithRealCode( selector ) {
+  if( supports3DTransforms ) {
+    
+    var nodes = document.querySelectorAll( selector );
+
+    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
+      var node = nodes[i];
+
+      if( !node.className ) ) {
+        node.className += ' roll';
+      }
+    };
+  }
+}
+					</code></pre>
+					</section>
+					<section>
+						<h2>Client Code</h2>
+					<pre><code contenteditable>
+function replacemeWithRealCode( selector ) {
+  if( supports3DTransforms ) {
+    
+    var nodes = document.querySelectorAll( selector );
+
+    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
+      var node = nodes[i];
+
+      if( !node.className ) ) {
+        node.className += ' roll';
+      }
+    };
+  }
+}
+					</code></pre>					</section>
+					<section>
+						<h2>Test</h2>
+					<pre><code contenteditable>
+npm install -replace with real commands
+node server.js
+					</code></pre>					</section>
+					<section>
+						<h2>Build and Deploy</h2>
+					<pre><code contenteditable>
+git push heroku replace with real commands 
+
+					</code></pre>					
+				</section>
 				</section>
 				
 				<!-- Example of nested vertical slides -->
 				<section>
+					<h1>Gotchas</h1>
 					<section>
 						<h2>Vertical Slides</h2>
-						<p>
-							Slides can be nested inside of other slides,
-							try pressing <a href="#/2/1">down</a>.
-						</p>
-						<a href="#/2/1" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
 					</section>
 					<section>
-						<h2>Basement Level 1</h2>
-						<p>Press down or up to navigate.</p>
 					</section>
 					<section>
-						<h2>Basement Level 2</h2>
-						<p>Cornify</p>
-						<a class="test" href="http://cornify.com">
-							<img width="280" height="326" src="https://s3.amazonaws.com/hakim-static/reveal-js/cornify.gif" alt="Unicorn">
-						</a>
 					</section>
 					<section>
-						<h2>Basement Level 3</h2>
-						<p>That's it, time to go back up.</p>
-						<a href="#/2" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-						</a>
 					</section>
 				</section>
 
-				<section>
-					<h2>Holistic Overview</h2>
-					<p>
-						Press <strong>ESC</strong> to enter the slide overview!
-					</p>
-				</section>
-
-				<section>
-					<h2>Works in Mobile Safari</h2>
-					<p>
-						Try it out! You can swipe through the slides pinch your way to the overview.
-					</p>
-				</section>
-
-				<section>
+<!-- 				<section>
 					<h2>Marvelous Unordered List</h2>
 					<ul>
 						<li>No order here</li>
@@ -122,9 +333,9 @@
 						<li>Two is smaller than...</li>
 						<li>Three!</li>
 					</ol>
-				</section>
+			 -->	</section>
 
-				<section data-markdown>
+	<!-- 			<section data-markdown>
 					## Markdown support
 					
 					For those of you who like that sort of thing. Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
@@ -136,9 +347,9 @@
   Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
 &lt;/section&gt;
 					</code></pre>
-				</section>
+				</section> -->
 
-				<section>
+	<!-- 			<section>
 					<h2>Transition Styles</h2>
 					<p>
 						You can select from different transitions, like:
@@ -149,9 +360,9 @@
 						<li><a href="http://lab.hakim.se/reveal-js/?transition=concave">Concave</a></li>
 						<li><a href="http://lab.hakim.se/reveal-js/?transition=linear">Linear</a></li>
 					</ul>
-				</section>
+				</section> -->
 
-				<section>
+<!-- 				<section>
 					<section data-state="alert">
 						<h2>Global State</h2>
 						<p>
@@ -264,10 +475,10 @@ function linkify( selector ) {
 						<li><a href="http://twitter.com/hakimel">Follow me on Twitter</a></li>
 					</ul>
 				</section>
-				
+	 -->			
 				<section>
 					<h1>THE END</h1>
-					<h3>BY Hakim El Hattab / hakim.se</h3>
+					<h3>BY Logan Allred/ Joel Thornton</h3>
 				</section>
 			</div>
 
