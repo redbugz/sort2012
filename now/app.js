@@ -29,6 +29,12 @@ app.get('/chat', function(req, res){
   }});
 });
 
+app.get('/play', function(req, res){
+  res.render('play', {locals: {
+    title: 'NowJS + Express Example'
+  }});
+});
+
 app.listen(8080);
 console.log("Express server listening on port %d", app.address().port);
 
@@ -193,46 +199,127 @@ for (var i=0; i < temples.length; i++) {
   temples[i].index = i;
 }
 
-var names = [];
+var scores = {};
 
 
 // NowJS component
 var nowjs = require("now");
 var everyone = nowjs.initialize(app);
-everyone.state = temples;
-everyone.names = names;
+everyone.state = {temples:temples, scores:scores};
 
 var updateEveryoneState = function(newName, templeStatus) {
 
-  if (newName) {
-   names.push({name:newName, count: 0});
+  if (!scores[newName]) {
+    scores[newName] = {name:newName, count: 0};
   }
 
   if (templeStatus && templeStatus.index) {
+   if (newName) {
+     scores[newName].count += 1;
+   }
    console.log('Setting everyone.state[' + templeStatus.index + '] to ' + JSON.stringify(templeStatus));
-   everyone.state[templeStatus.index] = templeStatus;
+   temples[templeStatus.index] = templeStatus;
   }
 
 }
 
 nowjs.on('connect', function(){
 
+  if (everyone.newName) {
+    console.log('everyone.newName:' + everyone.newName);
+    this.now.name = everyone.newName;
+    everyone.newName = undefined;
+  }
+
   if (this.now.name) {
     console.log("Joined: " + this.now.name);
     updateEveryoneState(this.now.name);
-    console.log('Sending everyone.state:' + JSON.stringify(everyone.state) );
+    console.log('Sending Temple Status through everyone.state' );
   }
-    this.now.receiveMessage(this.now.name, everyone.state);
-
+  if (this.now.receiveMessage) {
+    this.now.receiveMessage(this.now.name, "Joined");
+  }
+  if (this.now.receiveTempleStatus) {
+    this.now.receiveTempleStatus(this.now.name, everyone.state);
+  }
 
 });
 
 nowjs.on('disconnect', function(){
-      console.log("Left: " + this.now.name);
+  console.log("Left: " + this.now.name);
+  if (this.now.name) {
+    delete updateEveryoneState.scores[this.now.name];
+    updateEveryoneState.scores[this.now.name] = undefined;
+  }
 });
 
-everyone.now.distributeMessage = function(templeStatus){
-  updateEveryoneState(null, templeStatus);
-  everyone.now.receiveMessage(this.now.name, templeStatus);
+everyone.now.distributeMessage = function(message){
+  console.log('Updating all clients through everyone.now.receiveMessage');
+  everyone.now.receiveMessage(this.now.name, message);
+};
+
+everyone.now.distributeTempleStatus = function(templeStatus){
+  updateEveryoneState(this.now.name, templeStatus);
+  console.log('Updating all clients through everyone.now.receiveTempleStatus');
+  everyone.now.receiveTempleStatus(this.now.name, templeStatus);
+};
+
+everyone.now.addName = function(newName) {
+  console.log('New Name:' + newName);
+  everyone.newName = newName;
+  everyone.now.receiveTempleStatus(null, everyone.state);
+};
+
+
+function Trie(vertex) {
+  this.root = vertex;
+  this.addWord = function(vertex, word) {
+    if(!word.length) {
+      return;
+    } else {
+      vertex.words.push(word);
+      if(!(word[0] in vertex.children)) {
+        vertex.children[word[0]] = new Vertex(word[0]);
+      }
+      this.addWord(vertex.children[word[0]], word.substring(1));
+      return;
+    }
+  }
+
+  this.retrieve = function(prefix) {
+    var vertex = this.root;
+    while(prefix.length) {
+      vertex = vertex.children[prefix[0]];
+      prefix = prefix.substring(1);
+      if(!vertex) {
+        return '';
+      }
+    }
+    return vertex.words;
+  }
+}
+
+function Vertex(val) {
+  this.children = {};
+  this.words = [];
+  this.val = val;
+}
+
+var countries;
+var fs = require('fs');
+var rootVert = new Vertex('');
+var trie = new Trie(rootVert);
+fs.readFile('./public/temples.txt', function(err, data) {
+  countries = data.toString().split('\n');
+  for(var i in countries) {
+    var country = countries[i].toLowerCase();
+    trie.addWord(rootVert, country);
+  }
+});
+
+everyone.now.getGuess = function(val) {
+  val = val.toLowerCase();
+  var guesses = trie.retrieve(val);
+  this.now.receiveGuess(guesses[0]);
 };
 

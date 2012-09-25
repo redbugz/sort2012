@@ -1,0 +1,148 @@
+Aba Nigeria
+Accra Ghana
+Adelaide Australia
+Albuquerque New Mexico
+Anchorage Alaska
+Apia Samoa
+Asunción Paraguay
+Atlanta Georgia
+Baton Rouge Louisiana
+Bern Switzerland
+Billings Montana
+Birmingham Alabama
+Bismarck North Dakota
+Bogotá Colombia
+Boise Idaho
+Boston Massachusetts
+Bountiful Utah
+Brisbane Australia
+Buenos Aires Argentina
+Calgary Alberta
+Campinas Brazil
+Caracas Venezuela
+Cardston Alberta
+Cebu City Philippines
+Chicago Illinois
+Ciudad Juárez Mexico
+Cochabamba Bolivia
+Colonia Juárez Chihuahua Mexico
+Columbia River Washington
+Columbia South Carolina
+Columbus Ohio
+Copenhagen Denmark
+Córdoba Argentina
+Curitiba Brazil
+Dallas Texas
+Denver Colorado
+Detroit Michigan
+Draper Utah
+Edmonton Alberta
+Fort Lauderdale Florida
+Frankfurt Germany
+Freiberg Germany
+Fresno California
+Fukuoka Japan
+Gilbert Arizona
+Guadalajara Mexico
+Guatemala City Guatemala
+Guayaquil Ecuador
+Halifax Nova Scotia
+Hamilton New Zealand
+Helsinki Finland
+Hermosillo Sonora Mexico
+Hong Kong China
+Houston Texas
+Idaho Falls Idaho
+Johannesburg South Africa
+Jordan River Utah
+Kansas City Missouri
+Kona Hawaii
+Kyiv Ukraine
+Laie Hawaii
+Las Vegas Nevada
+Lima Peru
+Logan Utah
+London England
+Los Angeles California
+Louisville Kentucky
+Lubbock Texas
+Madrid Spain
+Manaus Brazil
+Manhattan New York
+Manila Philippines
+Manti Utah
+Medford Oregon
+Melbourne Australia
+Memphis Tennessee
+Mérida Mexico
+Mesa Arizona
+Mexico City Mexico
+Monterrey Mexico
+Montevideo Uruguay
+Monticello Utah
+Montreal Quebec
+Mount Timpanogos Utah
+Nashville Tennessee
+Nauvoo Illinois
+Newport Beach California
+Nuku alofa Tonga
+Oakland California
+Oaxaca Mexico
+Ogden Utah
+Oklahoma City Oklahoma
+Oquirrh Mountain Utah
+Orlando Florida
+Palmyra New York
+Panama City Panama
+Papeete Tahiti
+Payson Utah
+Perth Australia
+Philadelphia Pennsylvania
+Phoenix Arizona
+Portland Oregon
+Porto Alegre Brazil
+Preston England
+Provo Utah
+Quetzaltenango Guatemala
+Raleigh North Carolina
+Recife Brazil
+Redlands California
+Regina Saskatchewan
+Reno Nevada
+Rexburg Idaho
+Rome Italy
+Sacramento California
+Salt Lake
+San Antonio Texas
+San Diego California
+San José Costa Rica
+San Salvador El Salvador
+Santiago Chile
+Santo Domingo Dominican Republic
+São Paulo Brazil
+Seattle Washington
+Seoul Korea
+Snowflake Arizona
+Spokane Washington
+St. George Utah
+St. Louis Missouri
+St. Paul Minnesota
+Stockholm Sweden
+Suva Fiji
+Sydney Australia
+Taipei Taiwan
+Tampico Mexico
+Tegucigalpa Honduras
+The Gila Valley Arizona
+The Hague Netherlands
+Tokyo Japan
+Toronto Ontario
+Trujillo Peru
+Tuxtla Gutiérrez Mexico
+Twin Falls Idaho
+Vancouver British Columbia
+Veracruz Mexico
+Vernal Utah
+Villahermosa Mexico
+Washington D.C.
+Winter Quarters Nebraska
