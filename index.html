@@ -41,35 +41,42 @@
 			<div class="slides">
 				<section>
 					<h1>Real Time Web Applications</h1>
-					<h3>With Node.js</h3>
+					<h2>With Node.js</h2>
+					<br>
 					<h4>Logan Allred &amp; Joel Thornton</h4>
 				</section>
 				<section>
 					<h3>Presenters</h3>
+					<br><br>
+					<p>Logan Allred</p>
 					<p>
-						<i><small>Logan Allred-Front End Developer<a href="http://redbugz.com"> </a> / <a href="http://twitter.com/redbugz">allredlr@familysearch.org</a></small></i>
+						<small><i>Front End Developer, FamilySearch
+							<br> <a href="#">allredlt@familysearch.org</a></small></i>
 					</p>
+					<br>
+					<p>Joel Thornton</p>
 					<p>
-						<i><small>Joel Thornton-Front End Developer<a href="http://thorntonjn@familysearch.com"></a> / <a href="http://twitter.com/redbugz">thorntonjn@familysearch.org</a></small></i>
+						<i><small>Front End Developer, FamilySearch<br>
+							<a href="#">thorntonjn@familysearch.org</a></small></i>
 					</p>
 				</section>
 				<section>
-					<h2>Topic Covered</h2>
+					<h2>Topics Covered</h2>
 					<ul>
-						<li>What is Realtime ?</li>
-						<li>Cool Demos</li>
+						<li>What are Real-Time Apps?</li>
+						<li>Some Fun Demos</li>
 						<li>Tools Overview</li>
 						<li>Getting Started</li>
-						<li>What to Watch out for</li>
+						<li>Let's Build a Real-Time App!</li>
 					</ul>
 				</section>
 
 				<section>
-					<h2>What Is Real Time?</h2>
+					<h2>What Are Real-Time Web Applications?</h2>
 					<ul>
 						<li>Persistent Connection</li>
 						<li>Shared Event Notification</li>
-						<li>Continuus Communication</li>
+						<li>Continuous Communication</li>
 					</ul>
 				</section>
 
@@ -86,10 +93,12 @@
 				<section>
 					<h1>Good Candidates</h1>
 					<ul>
-						<li>Live Monitoring Diagnostics and Statistics</li>
-						<li>Social Applications - Facebook's Newsfeed and Twitter </li>
+						<li>Real-Time Communication, Chat, Instant Feedback</li>
+						<li>Dashboards, Live Monitoring Diagnostics and Statistics</li>
+						<li>Search, Filtering, Auto-Complete</li>
+						<li>Social Applications - Facebook's Ticker and Twitter </li>
 						<li>Multiplayer Games</li>
-						<li>Cooperative Sharing Applications</li>
+						<li>Collaborative Sharing Applications</li>
 					</ul>
 				</section>
 
@@ -104,107 +113,78 @@
 						</a> -->
 					</section>
 					<section>
-						<h2>Simple Chat</h2>
-						<p>Press down or up to navigate.</p>
+						<h3><a href='http://wordsquared.com'>http://wordsquared.com</a></h3>
+						<h3><a href='http://typewith.me/p/sort2012'>http://typewith.me/p/sort2012</a></h3>
+						<h3><a href='http://demo.kaazing.com/livefeed/'>http://demo.kaazing.com/livefeed/</a></h3>
+						<h3><a href='http://docs.google.com'>docs.google.com</a></h3>
+						<h3><a href='http://pusher.com/showcase'>pusher.com</a></h3>
+						<h3><a href='http://sports.espn.go.com/nfl/gamecast'>http://sports.espn.go.com/nfl/gamecast</a></h3>
+						<h3><a href='http://browserquest.mozilla.org'>browserquest.mozilla.org</a></h3>
 					</section>
 					<section>
 						<h2>Multiplayer Puzzle Game</h2>
-						<p>Cornify</p>
+						<p>Jigsaw Puzzle</p>
 					</section>
 				</section>
 
-				
-				<section>
-					<h2> Real-Time App Issues</h2>
-					<ul> 
-						<li>Building, Deploying and Maintaining Server-side Components</li>
-						<li>Different Browser Models
-							<ul>
-								<li>Requires additional Client Side JavaScript</li>
-							</ul>
-						</li>
-						<li>Slow Early Adoption
-							<ul><li>Mostly limited to financial services or Web Chat</li></ul>
-						</li>
-						<li>Lack of Available and Discoverable Data</li>
-					</ul>
-				</section>
-				<section>
-					<ul>
-					<li>Multiple Early Hacks <a class="image" href="CometMaturityGuide.png" target="_blank">
-								<img width="178" height="238" src="CometMaturityGuide.png" alt="Maturity Guide" style="-webkit-transform: rotate(360deg);float:right;">
-							</a>
-							<ul>
-								<li>Ajax Push</li>
-								<li>Reverse Ajax</li>
-								<li>Two-way-web</li>
-								<li>HTTP Streaming</li>
-								<li>HTTP server push</li>
-								<li>Long-held HTTP request </li>
-								<li>Long Polling</li>
-							</ul>
-						</li>
-						<!-- <li> -->
-							
-							
-						<!-- </li> -->
-					</ul>
-				</section>
-				<section><h3>Comet Basics</h3>
-					<ol><li>Open an Ajax Connection</li>
-						<li>Wait Until Data is Received</li>
-						<li>When Data Arrives Process Data And Repeat</li>
-						<li><pre><code contenteditable> function longPoll () {
-  $.ajax({
-    cache: false,
-    dataType: 'json',
-    type: "GET",
-    url: "/comet_server_url",
-    success: function (json) {
-      processData(json);
+ 				<section> <h2> Let's Build a Real-Time web app </h2>
+ 					<section>
+ 					<ul><li>Client Side</li>
+	 				<li><pre><code contenteditable> 
+$(document).ready(function(){
+  now.receiveMessage = function(name, message){
+    $("#messages").append("
+" + name + ": " + message);
+  }
+  
+  $("#send-button").click(function(){
+    now.distributeMessage($("#text-input").val());
+    $("#text-input").val("");
+  });
+  
 
-      //create a new connection and repeat
-      longPoll_feed();
-    },
-	//wait for server, add 10 sec delay on error
-    error: function () { setTimeout(longPoll, 10*1000); }    
+  now.name = prompt("What's your name?", "");
+
 });
-}
-					</code></pre></li>
-				</ol>
-				 </section>
-
-
-				<section>
-					<h2> Why Real-Time Apps Now</h2>
-					<ul> 
-						<li>Better Data 
-							<ul>
-								<li>Availability</li>
-								<li>Discoverability</li>
-								<li>Publish/Subscribe</li>
-							</ul>
-						</li>
-						<li>More Demanding Web Apps</li>
-						<li>Improved Standards - HTML5 WebSockets RealTime server and client(web browser) two way communication over a single connection.</li>
-						<li>Easier and More Maintainable Server components</li>
-
-					</ul>
-				</section>
-
+ 					</code></pre>
+ 				</li>
+				</ul> 
+			</section>
+ 				
+				<section> 
+ 					<ul><li>Server Side</li>
+	 				<li><pre><code contenteditable> 
+everyone.now.distributeMessage = 
+	function(message) {
+  		everyone.now.receiveMessage(this.now.name, message);
+	};
+ 					</code></pre>
+ 				</li>
+				</ul> 
+ 				</section>
+ 				</section>
 				<section>
 					<h2> Tools For Real-Time App Development</h2>
 					<section>
 					<ul> 
-						<li><h3>nodejs</h3></li>
+						<li><h3>WebSocket Protocol</h3></li>
+							<ul>
 						<li><h3>SocketIO/SockJS</h3></li>
-						<li><h3>Multi-client synchronization models</h3></li>
-						<li><h3>Real-Time Development Frameworks</h3></li>
+							</ul>
+						<li><h3>nodejs Real-Time Development Frameworks</h3></li>
+							<ul>
+						<li><h3>now.js </h3></li>
+						<li><h3>socketstream.js </h3></li>
+						<li><h3>derby.js </h3></li>
+						<li><h3>meteor </h3></li>
+						    </ul>
+	
 					</ul>
 					</section>
 					<section>
 						<h1>Node.js</h1>
 						<ul>
+							<li><h3>Asynchronous Event Driven Request Model</h3></li>
 							<li><h3>Server Side Javascript</h3></li>
 							<li><h3>More Consistent Client-Server Synchronization</h3></li>
 							<li><h3>NPM</h3></li>
@@ -212,30 +192,85 @@
 						<ul>
 					</section>
 					<section>
-						<h1>SOCKETIO/SOCKS</h1>
+						<h1>SOCKET.IO/SOCKJS</h1>
 						<ul>
-							<li><h3>Websocket API</h3></li>
+							<li><h3>Implementation of Websocket Protocol</h3></li>
+							<li><h3>Falls back to comet protocols</h3></li>
+							<li><h3>Provides Client and Server Implementations</h3></li>
 						<ul>
 					</section>
 					<section>
-						<h1>Meteor.js</h1>
-					</section>
-					<section>
-						<h1>Derby.js</h1>
+						<h1>SocketStream</h1>
+						<ul>
+							<li><h3>Simple Modular Framework</h3></li>
+							<li><h3>Dedicated to Real-Time Single-page Apps</h3></li>
+							<li><h3>Designed to Integrate Easily With Other Modules</h3></li>
+						</ul>
 					</section>
 					<section>
 						<h1>Now.js</h1>
+						<ul>
+							<li><h3>Simple Framework</h3></li>
+							<li><h3>Limited in Scope</h3></li>
+							<li><h3>Easy to Get Started</h3></li>
+						</ul>
 					</section>
 					<section>
-						<h1>SockStream</h1>
+						<h1>Now.js</h1>
+						<ul>
+							
+							<li><h3>now "Pocket"</h3>
+								<ul> 
+									<li>client adds variables and functions </li>
+									<li>server can freely access them </li>
+								</ul>
+							</li>
+
+							<li><h3>everyone.now "Pocket"</h3>
+								<ul> 
+									<li>server changes or adds variables to the everyone.now pocket </li>
+									<li>passed along to every client's now pocket </li>
+								</ul>
+							</li
+						</ul>
 					</section>
+					<section>
+					  <h3>NOW.JS Performance Considerations</h3>
+					  <ul>
+					  	<li> Avoid deeply nested structures inside the now namespace </li>
+					  	<li> Sync values using remote function calls rather than using synced variables. </li>
+						<li> Execute locally when possible </li>
+					</ul>
+					</section>
+					<section>
+						<h1>Meteor</h1>
+						<ul> 
+							<li><h3>Full Stack Application Framework</h3></li>
+							<li><h3>Includes Deployment and Hosting</h3></li>
+							<li><h3>Tightly Integrated - Walled Garden</h3></li>
+							<li><h3>Model synchronization &amp; pub/sub</h3></li>
+							<li><h3>Opinionated</h3></li>
+							<li><h3>Focus on Developer Productivity</h3></li>
+						</ul>
+					</section>
+					<section>
+						<h1>Derby.js</h1>
+						<ul> 
+							<li><h3>Full Stack Application Framework</h3></li>
+							<li><h3>Advanced Model Synching and Conflict Resolution With Racer</h3>
+							</li>
+							<li><h3>Integrates With other Frameworks</h3></li>
+							<li><h3>Modularity Provides Flexibility</h3></li>
+						</ul>
+					</section>
+					
 				</section>
 
 				<section>
 					<section>
-					<h2>Collaborative Merge DEMO</h2>
+					<h2>Coding Example</h2>
 					<ul> 
-						<li><h3>Framework and TOOLS We Chose</h3></li>
+						<li><h3>Frameworks and TOOLS</h3></li>
 						<li><h3>Server Code</h3></li>
 						<li><h3>Client Code</h3></li>
 						<li><h3>Testing</h3></li>
@@ -243,9 +278,9 @@
 					</ul>
 					</section>
 					<section>
-						<h1>Framework and Libraries</h1>
+						<h1>Frameworks and Tools</h1>
 						<ul>
-							<li>NodeJS</li>
+							<li><h3>NodeJS</h3></li>
 							<li><h3>Derby</h3></li>
 							<li><h3>Heroku</h3></li>
 						<ul>
@@ -304,16 +339,19 @@ git push heroku replace with real commands
 				
 				<!-- Example of nested vertical slides -->
 				<section>
-					<h1>Gotchas</h1>
-					<section>
-						<h2>Vertical Slides</h2>
-					</section>
-					<section>
-					</section>
-					<section>
-					</section>
-					<section>
-					</section>
+					<h1>Q &amp; A</h1>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<p>
+						<i>Logan Allred &raquo; <a href="#">allredlt@familysearch.org</a></i>
+					</p>
+					<br>
+					<p>
+						<i>Joel Thornton &raquo; <a href="#">thorntonjn@familysearch.org</a></i>
+					</p>
 				</section>
 
 <!-- 				<section>
@@ -476,10 +514,10 @@ function linkify( selector ) {
 					</ul>
 				</section>
 	 -->			
-				<section>
+				<!-- <section>
 					<h1>THE END</h1>
 					<h3>BY Logan Allred/ Joel Thornton</h3>
-				</section>
+				</section> -->
 			</div>
 
 			<!-- The navigational controls UI -->
