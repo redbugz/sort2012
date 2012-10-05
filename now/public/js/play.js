@@ -1,9 +1,27 @@
 var playNow = function() {
+  var myCount = 0;
 
   var drawScores = function(scores) {
+    var score, name, count = 0, totalCount = 0;
     if (scores) {
+      if (scores && now.name) {
+        myCount = 0;
 
+        for (var key in scores) {
+          score = scores[key],
+          name = score.name || '',
+          count = score.count || 0;
+          if (name === now.name) {
+            myCount = score.count;
+          }
+          totalCount += count;
+        }
+
+      }
+      $('.myScore').html("You've Matched " + count);
     }
+
+
   }
 
   var redrawTemples = function (temples) {
