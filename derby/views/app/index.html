@@ -1,27 +1,62 @@
+<import: src=subnav>
+<import: src=chat>
+<import: src=play>
+<import: src=temple-state>
+
 <Title:>
-  Widgets
+  Temple Match
 
 <Header:>
   <body>
   <ui:connectionAlert>
 
+
 <Body:>
+  <app:subnav:subnav>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span3 results">
+        <app:temple-state:temple-state>
+      </div><!--/span-->
+      <div class="span6 play">
+        <div class="hero-unit">
+          <app:play:play>
+
+        </div>
+      </div><!--/span-->
+      <div class="span3 chat">
+        <div class="well sidebar-nav">
+          <app:chat:chat>
+        </div><!--/.well -->
+      </div><!--/span-->
+    </div><!--/row-->
+
+    <hr>
+
+    <footer>
+      <p>&copy; FamilySearch 2012</p>
+    </footer>
+
+  </div><!--/.fluid-container-->
+
   <boot:modal name="testModal" show={_showModal} close="Meh" primary="You too!">
     <@title>Modal <i>town</i></@title>
     How nice to see you!
   </boot:modal>
 
+
+
   <div class="container">
-    <h1 style="color:{test.color}">Bootstrap widgets</h1>
+    <h1 style="color:{state.color}">Bootstrap widgets</h1>
     <div class=btn-toolbar>
-      <boot:dropdown options={test.numbers}></boot:dropdown>
-      <boot:dropdown value={test.color} options={test.colors}></boot:dropdown>
+      <boot:dropdown options={state.numbers}></boot:dropdown>
+      <boot:dropdown value={state.color} options={state.colors}></boot:dropdown>
       <div class=btn-group>
         <app:button clickFn="showModal">Show modal</app:button>
       </div>
     </div>
 
-    <boot:tabs current={test.currentTab}>
+    <boot:tabs current={state.currentTab}>
       <boot:tab title="One">
         Stuff
       </boot:tab>
@@ -34,3 +69,5 @@
 <!-- demonstrate passing in an x-bind function name to a component -->
 <button: nonvoid>
   <button class=btn x-bind="click: {{{clickFn}}}">Show modal</button>
+
+<scripts:>
