@@ -1,84 +1,77 @@
 
+ var started=false,
+     myTempleState,
+     myPlay,
+     myChat;
+
   $(document).ready(function() {
-   templeSelectionStatus();
+    if (started === false) {
+       started = true;
+       templeSelectionStatus();
+    }
   });
 
+  var nameAdded = false;
+
+  // Create WebSocket now connection before gathering name
+  now.connectComplete = function () {
+    if (!nameAdded && now.addName)  {
+      now.name = prompt("What's your name ?", "");
+      now.addName(now.name);
+      nameAdded = true;
+      $('.navbar-link').text(now.name);
+    }
+  }
 
   var templeSelectionStatus = function () {
-    $('#temple-state').append('<iframe  sandbox="allow-same-origin allow-forms allow-scripts" src="http://localhost:8080/temple-state"></iframe>');
+    myTempleState = templeState();
+    myChat = chatNow();
+    myPlay = playNow();
+
+    var showTab = function (name){
+      $('ul.nav li').removeClass('active');
+      $('#' + name).addClass('active');
+      $('div.results').addClass('hide');
+      $('div.play').addClass('hide');
+      $('div.chat').addClass('hide');
+      $('div.' + name).removeClass('hide');
+
+    }
+
+    $('#results').click(function(e) {
+      e.preventDefault();
+      showTab('results');
+      templeState();
+    });
+
     $('#chat').click(function(e) {
       e.preventDefault();
-      if (!now.name) {
-        now.name = prompt("What's your name ?", "");
-      }
-      now.addName(now.name);
-      $('#floater').prepend('<iframe  sandbox="allow-same-origin allow-forms allow-scripts" src="http://localhost:8080/chat/"></iframe>');
+      showTab('chat');
     });
     $('#play').click(function(e) {
       e.preventDefault();
-      if (!now.name) {
-        now.name = prompt("What's your name ?", "");
-      }
-      now.addName(now.name);
-      $('#floater').append('<iframe  sandbox="allow-same-origin allow-forms allow-scripts" src="http://localhost:8080/play"></iframe>');
+      showTab('play');
     });
 
-    $("ol.temples .temple-selection").click(
-        function (e) {
-          if ($('a img.temple-image', e.currentTarget).hasClass("large")) {
-            $('a img.temple-image', e.currentTarget).removeClass("large");
-          } else {
-            $('a img.temple-image', e.currentTarget).addClass("large");
-          }
-        }
-    );
+    $('#all').click(function(e) {
+      $('ul.nav li').removeClass('active');
+      $('#all').addClass('active');
+      $('div.results').removeClass('hide');
+      $('div.play').removeClass('hide');
+      $('div.chat').removeClass('hide');
+    });
 
-//    var redrawTempleStatus = function (templeStatus) {
-//      $('ol.temples').empty();
-//      for (var i = 0; i < templeStatus.length; i++) {
-//        var d = templeStatus[i];
-//        var $link = $('<a href="#"><img data-number=' + i + ' src="images/' + d.image + '" alt="temple" class="temple-image"/></a>'),
-//            $name = $('<h4 class="temple-title">' + d.name + '</h4>'),
-//            $li = $('<li class="temple-selection"></li>');
-//        $li.append($link);
-//        $li.append($name);
-////        $li.append($selectList.clone());
-//        $('ol.temples').append($li);
-//      }
-//
-////      $("ol.temples .temple-selection").click(
-////          function (e) {
-////            $('.temple-selection a img.temple-image').removeClass('selected');
-////            $('a img.temple-image', e.currentTarget).addClass("selected");
-////          }
-////      );
-//
-//      $("ol.temples .temple-selection").click(
-//          function (e) {
-//            if ($('a img.temple-image', e.currentTarget).hasClass("large")) {
-//              $('a img.temple-image', e.currentTarget).removeClass("large");
-//            } else {
-//              $('a img.temple-image', e.currentTarget).addClass("large");
-//            }
-//          }
-//      );
-//    }
-//
-//    now.receiveTempleStatus = function(name, templeState){
-//
-//      if (templeState && templeState.temples){
-//        redrawTempleStatus(templeState.temples)
-//      }
-//
-////      $('a img.temple-image[data-number="' + number + '"]').attr('src',src);
-////      var temple = $('a img.temple-image[data-number="' + number + '"]').text();
-////      $('a img.temple-image[data-number="' + number + '"]').text(name);
-//
-//
-//      // $("#messages").prepend("<br>" + name + ": " + message);
-//    }
+    now.receiveTempleStatus = function(name, state){
+      myTempleState.receiveTempleStatus(name, state);
+      myPlay.receiveTempleStatus(name,state);
+    },
 
+    now.receiveMessage = function(name, message) {
+       myChat.receiveMessage(name, message);
+    },
 
-
+    now.receiveGuess = function (guess) {
+      myPlay.receiveGuess(guess);
+    }
 
   }

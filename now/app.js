@@ -6,6 +6,7 @@ var app = express.createServer();
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
+app.use(express.compiler({ src : __dirname + '/public', enable: ['less']}));
 app.use(express.static(__dirname + '/public'));
 
 
@@ -13,25 +14,25 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res){
   res.render('index', {locals: {
-    title: 'NowJS + Express Example'
+    title: 'NowJS'
   }});
 });
 
 app.get('/temple-state', function(req, res){
   res.render('temple-state', {locals: {
-    title: 'NowJS + Express Example'
+    title: 'NowJS'
   }});
 });
 
 app.get('/chat', function(req, res){
   res.render('chat', {locals: {
-    title: 'NowJS + Express Example'
+    title: 'NowJS'
   }});
 });
 
 app.get('/play', function(req, res){
   res.render('play', {locals: {
-    title: 'NowJS + Express Example'
+    title: 'NowJS'
   }});
 });
 
@@ -114,7 +115,7 @@ var temples = [
   {name:'Lubbock Texas', image: 'images/lubbock-texas-214x128-LubbockTexasTmpl.jpg', status:'UNIDENTIFIED'},
   {name:'Madrid Spain', image: 'images/madrid-spain-214x128-0002011s.jpg', status:'UNIDENTIFIED'},
   {name:'Manaus Brazil', image: 'images/manaus-brazil-214x128-CU071102_sm01.jpg', status:'UNIDENTIFIED'},
-  {name:'Manhattan New York', image: 'images/manhattan-new-york-214x128-AV051230_cah005.jpgv', status:'UNIDENTIFIED'},
+  {name:'Manhattan New York', image: 'images/manhattan-new-york-214x128-AV051230_cah005.jpg', status:'UNIDENTIFIED'},
   {name:'Manila Philippines', image: 'images/manila-philippines-214x128-0001275s.jpg', status:'UNIDENTIFIED'},
   {name:'Manti Utah', image: 'images/manti-utah-214x128-0001882.jpg', status:'UNIDENTIFIED'},
   {name:'Medford Oregon', image: 'images/medford-oregon-214x128-CUR_IM030916-002.jpg', status:'UNIDENTIFIED'},
@@ -234,13 +235,22 @@ nowjs.on('connect', function(){
   if (this.now.name) {
     console.log("Joined: " + this.now.name);
     updateEveryoneState(this.now.name);
-    console.log('Sending Temple Status through everyone.state' );
-  }
-  if (this.now.receiveMessage) {
-    this.now.receiveMessage(this.now.name, "Joined");
-  }
-  if (this.now.receiveTempleStatus) {
-    this.now.receiveTempleStatus(this.now.name, everyone.state);
+
+    if (this.now.receiveMessage) {
+      console.log('Sending new name through now.receiveMessage !' );
+      this.now.receiveMessage(this.now.name, "Joined");
+    }
+    if (this.now.receiveTempleStatus && everyone.state) {
+      console.log('Sending Temple Status in everyone.state through now.receiveTempleStatus' );
+      this.now.receiveTempleStatus(this.now.name, everyone.state);
+    }
+  } else {
+
+    if (this.now.connectComplete()) {
+      console.log("Sending Connection confirmation through now.connectComplete");
+
+      this.now.connectComplete();
+    }
   }
 
 });
@@ -248,8 +258,10 @@ nowjs.on('connect', function(){
 nowjs.on('disconnect', function(){
   console.log("Left: " + this.now.name);
   if (this.now.name) {
-    delete updateEveryoneState.scores[this.now.name];
-    updateEveryoneState.scores[this.now.name] = undefined;
+    if (updateEveryoneState && updateEveryoneState.scores && updateEveryoneState.scores[this.now.name]) {
+      delete updateEveryoneState.scores[this.now.name];
+      updateEveryoneState.scores[this.now.name] = undefined;
+    }
   }
 });
 
@@ -267,7 +279,10 @@ everyone.now.distributeTempleStatus = function(templeStatus){
 everyone.now.addName = function(newName) {
   console.log('New Name:' + newName);
   everyone.newName = newName;
-  everyone.now.receiveTempleStatus(null, everyone.state);
+  if (everyone.now.receiveTempleStatus) {
+    console.log('sending everyone.state through receiveTempleStatus');
+    everyone.now.receiveTempleStatus(null, everyone.state);
+  }
 };
 
 

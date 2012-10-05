@@ -1,15 +1,5 @@
 var templeState = function(){
 
-//  $('.temple-selection').click(
-//      function(e) {
-//        if ($('a img.temple-image', e.currentTarget).hasClass("large")) {
-//          $('a img.temple-image', e.currentTarget).removeClass("large");
-//        } else {
-//          $('a img.temple-image', e.currentTarget).addClass("large");
-//        }
-//      }
-//  );
-
   var addTemple = function (temple) {
     if (temple && temple.index) {
       var $link = $('<a href="#" class="cf" index="' + temple.index + '"><img data-name="' + temple.name + '" src="' + temple.image + '" alt="temple" class="temple-image"/></a>'),
@@ -17,7 +7,7 @@ var templeState = function(){
           $li = $('<li class="temple-selection"></li>');
       $li.append($link);
       $li.append($nameStatus);
-      $('ol.temples').prepend($li);
+      $('ul.temple-results').prepend($li);
       $li.click(
           function (e) {
             if ($('a img.temple-image', e.currentTarget).hasClass("large")) {
@@ -32,7 +22,7 @@ var templeState = function(){
 
   var redrawTempleStatus = function (temples) {
     if (temples && temples.length) {
-      $('ol.temples').empty();
+      $('ul.temple-results').empty();
       for (var i = 0; i < temples.length; i++) {
         var temple = temples[i];
         if (temple.status !== "UNIDENTIFIED") {
@@ -51,7 +41,7 @@ var templeState = function(){
           name = score.name || '',
           count = score.count || '0';
         if (name) {
-          $('<li class="' + name + '">'+ name + ':' + count + '</li>').appendTo($scores);
+          $('<li class="' + name + '"><a href="#">'+ name + ':' + count + '</a></li>').appendTo($scores);
         }
       }
     }
@@ -65,14 +55,11 @@ var templeState = function(){
       oldScore[1] = parseInt(oldScore[1]) + 1;
       $score.html(name + ":" + oldScore[1]);
     } else {
-      $('<li class="' + name + '">'+ name + ': 1</li>').appendTo($scores);
+      $('<li class="' + name + '"><a href="#">'+ name + ': 1</a></li>').appendTo($scores);
     }
   }
 
-
-
-
-  now.receiveMessage = function(name, templeState){
+  var receiveMessage = function(name, templeState){
     if (templeState){
       redrawTempleStatus(templeState.temples);
       addTemple(templeState);
@@ -80,7 +67,7 @@ var templeState = function(){
 
   }
 
-  now.receiveTempleStatus = function(name, templeState){
+  var receiveTempleStatus = function(name, templeState){
     if (templeState){
       if (templeState.temples || templeState.scores) {
         redrawTempleStatus(templeState.temples);
@@ -92,6 +79,6 @@ var templeState = function(){
     }
   }
 
-
+  return ({receiveMessage:receiveMessage, receiveTempleStatus:receiveTempleStatus});
 
 };

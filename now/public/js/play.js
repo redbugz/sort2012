@@ -21,19 +21,15 @@ var playNow = function() {
         for (var i = 0; i < temples.length; i++) {
           var d = temples[i];
           var $newSelectList2 = $selectList.clone(),
-             $newSelectList = $('<input id="autocomplete_1' + i + '" type="text">');
-              $link = $('<a href="#" class="cf" index="' + d.index + '"><img data-name="' + d.name + '" src="' + d.image + '" alt="temple" class="temple-image"/></a>'),
+             $newSelectList = $('<input id="autocomplete_1' + i + '" type="text">'),
+              $link = $('<a href="#" class="cf" index="' + d.index + '"><img data-name="' + d.name + '" src="' + d.image + '" alt="temple" class="temple-image cf"/></a>'),
               $li = $('<li class="temple-selection"></li>');
           if (d.status === 'UNIDENTIFIED') {
             $li.append($link);
 
-            $newSelectList2.change(function (e) {
-              removeTextMatch($(e.target).val());
-            });
+            $newSelectList2.change(checkForMatch);
 
-            $newSelectList.click(function (e) {
-              removeTextMatch($(e.target).val());
-            });
+            $newSelectList.click(checkForMatch);
 
             $newSelectList.keyup(function autocomplete(event) {
               //checking if the delete key was pressed
@@ -54,61 +50,102 @@ var playNow = function() {
 
         $("ol.temples .temple-selection").click(
             function (e) {
-              var $img = $('a img.temple-image', e.currentTarget);
-
-              $('.temple-selection a ').removeClass('selected');
+              $('ol.temples .temple-selection a ').removeClass('selected');
               $('a ', e.currentTarget).addClass("selected");
-
-              if ($img.hasClass("large")) {
-                $img.removeClass("large");
-              } else {
-                $img.addClass("large");
-              }
-              removeMatches(e);
               return false;
             }
         );
+
+
+        $('ol.temples input[type="text"]').keypress(function (e) {
+          if (e.which && e.which === 13) {
+            checkForMatch(e);
+            return false;
+          }
+        });
+
       }
 
     };
 
-  var removeMatches = function(e) {
-    if (!removeTextMatch($('input', $(e.currentTarget)).val())) {
-      removeTextMatch($('select', $(e.currentTarget)).val());
+  var animateSuccess = function ($li) {
+    var $img = $(".temple-image", $li);
+
+        $img.attr('src', 'images/success.jpg');
+        $li.animate({
+          width: ['toggle', 'swing'],
+          height: ['toggle', 'swing'],
+          opacity: 'toggle'
+        }, 4000, 'linear', function() {
+          $li.css('opacity', '');
+          $li.css('width', '');
+          $li.css('height', '');
+          $li.remove();
+        });
+
+  };
+
+  var animateError = function ($link) {
+    var $img = $('img', $link),
+        saveSrc = $img.attr("src");
+    $img.attr('src', 'images/error.jpeg');
+    $link.animate({
+      opacity: 'toggle'
+    }, 500, 'linear', function() {
+      $link.css('display','');
+      $img.attr('src', saveSrc);
+    });
+  };
+
+  var checkForMatch = function(e) {
+    var $link = $($(e.currentTarget).parent());
+    if (textMatches($link, $(e.currentTarget).val()) ||
+          textMatches($link, $(e.currentTarget).val())) {
+      distributeTempleStatus($link);
+      animateSuccess($link);
+    } else {
+      animateError($link);
     }
   };
 
-  var removeTextMatch = function (str) {
-    var temple = {},
-        $link = $('a.selected');
-    if ($('a.selected img.temple-image').data('name') && $('a.selected img.temple-image').data('name').toLowerCase() === str.toLowerCase()){
-      temple.name = $('a.selected img.temple-image').data('name');
-      temple.index = $link.attr('index');
-      temple.image = $('img',$link).attr('src');
-      temple.status = 'Found by ' + now.name;
-      now.distributeTempleStatus(temple);
+  var textMatches = function ($link, str) {
+    var $img = $('img.temple-image', $link);
+    if ($img.data('name') && $img.data('name').toLowerCase() === str.toLowerCase()){
       return true;
     }
     return false;
-  };
+  }
 
+  var distributeTempleStatus = function ($link) {
+    var temple = {},
+        $img = $('img.temple-image', $link);
+    temple.name = $img.data('name');
+    temple.index = $link.attr('index');
+    temple.image = $img.attr('src');
+    temple.status = 'Found by ' + now.name;
+    now.distributeTempleStatus(temple);
+  }
 
   var updateTemples = function (templeStatus) {
+    var $link, $img;
+
     if (templeStatus) {
       // remove the selection
-      $('a[index="'+ templeStatus.index + '"]').remove();
-      $('select option[value="' + templeStatus.name + '"]').remove();
+      $link = $('.temples a[index="'+ templeStatus.index + '"]');
+      $img = $('img', $link);
+
+      if ($img && $img.attr('src') !== "images/success.jpg") {
+          $link.remove();
+      }
+      $('.temples select option[value="' + templeStatus.name + '"]').remove();
     }
   }
 
-  now.receiveTempleStatus = function(name, state){
-
+  var receiveTempleStatus = function(name, state){
     if (!nameAdded)  {
       now.addName(now.name);
       nameAdded = true;
-
     }
-
     if (state){
         drawScores(state.scores);
         redrawTemples(state.temples);
@@ -116,42 +153,17 @@ var playNow = function() {
     }
   }
 
-  now.receiveGuess = function(guess) {
+  var receiveGuess = function(guess) {
     var val =  $('a.selected input').val();
-//  var subGuess = guess.substring(val.length);
     if(guess) {
-      $('a.selected input').val(val + guess);
-      $('a.selected input')[0].selectionStart = val.length;
-      $('a.selected input')[0].selectionEnd = guess.length + val.length;
+      $('ol.temples a.selected input').val(val + guess);
+      $('ol.temples a.selected input')[0].selectionStart = val.length;
+      $('ol.temples a.selected input')[0].selectionEnd = guess.length + val.length;
     }
   };
 
-//    $("#send-button").click(function(){
-//      if ($('a img.temple-image.selected').data('number') == $("#text-input").val()) {
-//        now.distributeMessage($("#text-input").val() + ":" + $('a img.temple-image.selected').attr('src'));
-//        $("#text-input").val("");
-//        $("#text-input").focus();
-//      }
-//    });
-//
-//    $("#text-input").keypress(function (e) {
-//      if (e.which && e.which === 13) {
-//        $("#send-button").click();
-//        return false;
-//      }
-//    });
-
-//  if (!now.name) {
-//    now.name = prompt("What's your name?", "");
-//  }
-
-  if (!now.name) {
-    now.name = prompt("What's your name ?", "");
-//    now.addName(now.name);
-  }
-
-  var nameAdded = false;
-
   $("#text-input").focus();
+
+  return ({receiveTempleStatus:receiveTempleStatus, receiveGuess:receiveGuess});
 
 };

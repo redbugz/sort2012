@@ -1,8 +1,36 @@
-<h1><%= title %></h1>
-<p>Welcome to <%= title %></p>
-<p>Example of an embedded chat window added to any site. <a href='#' id='chat'>Chat</a></p>
-<p>Example of an embedded active window. <a href='#' id='play'>Play Temple Match</a></p>
+<hr>
+<hr>
 
-<div id="temple-state"></div>
+<%- partial("subnav.ejs") %>
 
-<div id="floater" ></div>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span3 results">
+      <%- partial("temple-state.ejs") %>
+    </div><!--/span-->
+    <div class="span6 play">
+      <div class="hero-unit">
+        <%- partial("play.ejs") %>
+
+      </div>
+    </div><!--/span-->
+    <div class="span3 chat">
+        <div class="well sidebar-nav">
+        <%- partial("chat.ejs") %>
+        </div><!--/.well -->
+      </div><!--/span-->
+  </div><!--/row-->
+
+  <hr>
+
+  <footer>
+    <p>&copy; FamilySearch 2012</p>
+  </footer>
+
+</div><!--/.fluid-container-->
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+
