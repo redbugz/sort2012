@@ -20,6 +20,9 @@ var playNow = function() {
       }
       $('.myScore').html("You've Matched " + count);
     }
+    if (now.name) {
+      $('.navbar-link').text(now.name);
+    }
 
 
   }
