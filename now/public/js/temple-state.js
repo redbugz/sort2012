@@ -8,15 +8,6 @@ var templeState = function(){
       $li.append($link);
       $li.append($nameStatus);
       $('ul.temple-results').prepend($li);
-      $li.click(
-          function (e) {
-            if ($('a img.temple-image', e.currentTarget).hasClass("large")) {
-              $('a img.temple-image', e.currentTarget).removeClass("large");
-            } else {
-              $('a img.temple-image', e.currentTarget).addClass("large");
-            }
-          }
-      );
     }
   }
 

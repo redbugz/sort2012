@@ -4,24 +4,24 @@
      myPlay,
      myChat;
 
-  $(document).ready(function() {
-    if (started === false) {
-       started = true;
-       templeSelectionStatus();
-    }
-  });
+//  $(document).ready(function() {
+//    if (started === false) {
+//       started = true;
+//       templeSelectionStatus();
+//    }
+//  });
 
   var nameAdded = false;
 
   // Create WebSocket now connection before gathering name
-  now.connectComplete = function () {
-    if (!nameAdded && now.addName)  {
-      now.name = prompt("What's your name ?", "");
-      now.addName(now.name);
-      nameAdded = true;
-      $('.navbar-link').text(now.name);
-    }
-  }
+//  now.connectComplete = function () {
+//    if (!nameAdded && now.addName)  {
+//      now.name = prompt("What's your name ?", "");
+//      now.addName(now.name);
+//      nameAdded = true;
+//      $('.navbar-link').text(now.name);
+//    }
+//  }
 
   var templeSelectionStatus = function () {
     myTempleState = templeState();

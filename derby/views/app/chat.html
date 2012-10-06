@@ -1,8 +1,14 @@
 <chat:>
+  {{#with state}}
   <h2>Chat</h2>
-  <div >
-    <input type="text" id="text-input">
-    <input type="submit" value="Send" id="send-button" class="btn" >
-  </div>
-  <div id="messages"></div>
 
+  <div>
+    <input type="text" id="text-input">
+    <input type="submit" value="Send" id="send-button" class="btn">
+  </div>
+  <div id="messages">
+    {#each chats as :chat}
+    <div>{{name}}: {{message}}</div>
+    {/}
+  </div>
+  {{/}}

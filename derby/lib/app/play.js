@@ -34,7 +34,7 @@ var playNow = function() {
         $('ol.temples').empty();
         for (var i = 0; i < temples.length; i++ ){
           var d = temples[i];
-          if (d.status === 'UNIDENTIFIED') {
+          if (d.found === false) {
             $selectList.append('<option>'+ d.name +'</option>');
           }
         }
@@ -45,7 +45,7 @@ var playNow = function() {
              $newSelectList = $('<input id="autocomplete_1' + i + '" type="text">'),
               $link = $('<a href="#" class="cf" index="' + d.index + '"><img data-name="' + d.name + '" src="' + d.image + '" alt="temple" class="temple-image cf"/></a>'),
               $li = $('<li class="temple-selection"></li>');
-          if (d.status === 'UNIDENTIFIED') {
+          if (d.found === false) {
             $li.append($link);
 
             $newSelectList2.change(checkForMatch);

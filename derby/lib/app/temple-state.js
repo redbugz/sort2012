@@ -25,7 +25,7 @@ var templeState = function(){
       $('ul.temple-results').empty();
       for (var i = 0; i < temples.length; i++) {
         var temple = temples[i];
-        if (temple.status !== "UNIDENTIFIED") {
+        if (temple.found === true) {
           addTemple(temple);
         }
       }

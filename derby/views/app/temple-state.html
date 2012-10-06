@@ -1,8 +1,25 @@
 <temple-state:>
   {{#with state}}
+
   <div class="well sidebar-nav">
     <h2>Results</h2>
-    <ul class="nav nav-list scores"></ul>
-    <ul class="nav nav-list temple-results"></ul>
+
+    <ul class="nav nav-list scores">
+      {#each scores as :score}
+      <li class="{{name}}"><a href="#">{{name}}: {{count}}</a></li>
+      {/}
+    </ul>
+    <ul class="nav nav-list temple-results">
+      {#each temples as :temple}
+        {#if matched}
+          <li class="temple-selection">
+            <a href="#" class="cf" index="{{index}}">
+              <img data-name="{{name}}" src="{{image}}" alt="temple" class="temple-image cf"/>
+              <h4>{{name}}&nbsp;{{matched}}</h4>
+            </a>
+          </li>
+        {/}
+      {/}
+    </ul>
   </div><!--/.well -->
   {{/}}

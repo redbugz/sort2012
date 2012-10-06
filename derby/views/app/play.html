@@ -3,11 +3,29 @@
 
   <h1> Match Temples </h1>
 
-  <p>Work together to match temples to names. Results are on the left.  Ask questions or share cheats to the right.</p>
-  <h2 class='myScore'></h2>
+  <p>Work together to match temples to names. Results are on the left. Ask
+    questions or share cheats to the right.</p>
 
-
+  <h2 class='myScore'>{{myScore}}</h2>
   <ol class="temples cf">
+    {#each temples as :temple}
+    {#if not(matched)}
+    <li class="temple-selection">
+      <div href="#" class="cf" index="{{index}}">
+        <img data-name="{{name}}" src="{{image}}" alt="temple"
+             class="temple-image cf"/>
+        <input id="autocomplete_1{{index}}" type="text">
+        <select name=select1 x-bind="change:checkForMatch">
+          <option>Select Temple</option>
+          {#each temples as:temple2}
+          {#if not(matched)}
+          <option>{{name}}</option>
+          {/}
+          {/}
+        </select>
+      </div>
+    </li>
+    {/}
+    {/}
   </ol>
-  </script>
   {{/}}
