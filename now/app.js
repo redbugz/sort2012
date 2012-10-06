@@ -246,7 +246,7 @@ nowjs.on('connect', function(){
     }
   } else {
 
-    if (this.now.connectComplete()) {
+    if (this.now.connectComplete) {
       console.log("Sending Connection confirmation through now.connectComplete");
 
       this.now.connectComplete();
