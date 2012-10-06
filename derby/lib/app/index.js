@@ -253,7 +253,33 @@ var textMatches = function ($link, str) {
   return false;
 }
 
-var name = "";
+var myName = "";
+
+var getScore = function(name) {
+  for (var i = 0; i < scores.length; i++) {
+    if (scores[i].name === name) {
+      return scores[i];
+    }
+  }
+  return null;
+}
+
+
+var updateState = function(newName, templeStatus) {
+  var score = getScore(newName);
+  if (score) {
+    score.count += 1;
+    scores.push(score);
+  } else {
+    scores.push({name:newName, count: 0}];
+  }
+
+  if (templeStatus && templeStatus.index) {
+    console.log('Setting Temples.state[' + templeStatus.index + '] to ' + JSON.stringify(templeStatus));
+    temples[templeStatus.index] = templeStatus;
+  }
+
+};
 
 var distributeTempleStatus = function ($link) {
   var temple = {},
@@ -261,8 +287,9 @@ var distributeTempleStatus = function ($link) {
   temple.name = $img.data('name');
   temple.index = $link.attr('index');
   temple.image = $img.attr('src');
-  temple.status = 'Found by ' + name;
+  temple.status = 'Found by ' + myName;
   // set the model for this new temple status
+  updateState(null, templeModel)
 
 }
 
