@@ -39,37 +39,6 @@
 
   </div><!--/.fluid-container-->
 
-  <boot:modal name="testModal" show={_showModal} close="Meh" primary="You too!">
-    <@title>Modal <i>town</i></@title>
-    How nice to see you!
-  </boot:modal>
-
-
-
-  <div class="container">
-    <h1 style="color:{state.color}">Bootstrap widgets</h1>
-    <div class=btn-toolbar>
-      <boot:dropdown options={state.numbers}></boot:dropdown>
-      <boot:dropdown value={state.color} options={state.colors}></boot:dropdown>
-      <div class=btn-group>
-        <app:button clickFn="showModal">Show modal</app:button>
-      </div>
-    </div>
-
-    <boot:tabs current={state.currentTab}>
-      <boot:tab title="One">
-        Stuff
-      </boot:tab>
-      <boot:tab title="Two">
-        More stuff
-      </boot:tab>
-    </boot:tabs>
-  </div>
-
-<!-- demonstrate passing in an x-bind function name to a component -->
-<button: nonvoid>
-  <button class=btn x-bind="click: {{{clickFn}}}">Show modal</button>
-
 <scripts:>
   <script type="text/javascript" src="/js/jquery.min.js"></script>
 
