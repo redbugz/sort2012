@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <SocketStream/>
+    <title>Collaborative Jigsaw Puzzle</title>
+  </head>
+  <body>
+  <div id="content">
+
+  <!-- the instructions div, this is where messages are sent to the user regarding what they should do next -->
+    <div class="instructions">Welcome to a collaborative jigsaw puzzle! Pick a puzzle to begin - Click on one of the images below! Invite your friends to solve it with you</div>
+    <!-- the menu div, this is where smaller versions of the seven puzzles are displayed and the user can select a puzzle
+      by clicking on it-->
+    <div class="menu">
+      <br>
+      <a class="menued">
+        <img class="imgs" id="lazydays" src="images/lazydays/menupic.jpg" height=60 width=100 >
+      </a>
+      <a class="menued">
+        <img class="imgs" id='treeinforest' src="images/treeinforest/menupic.jpg" height=60 width=100 >
+      </a>
+      <a class="menued">
+        <img class="imgs" id="bostonskyline" src="images/bostonskyline/menupic.jpg" height=60 width=100 >
+      </a>
+      <a class="menued">
+        <img class="imgs" id="stormysunshine" src="images/stormysunshine/menupic.jpg" height=60 width=100 >
+      </a>
+      <a class="menued">
+        <img class="imgs" id="nyatnight" src="images/nyatnight/menupic.jpg" height=60 width=100 >
+      </a>
+      <a class="menued">
+        <img class="imgs" id="beautifulcosmos" src="images/beautifulcosmos/menupic.jpg" height=60 width=100 >
+      </a>
+      <a class="menued">
+        <img class="imgs" id="coloredwindows" src="images/coloredwindows/menupic.jpg" height=60 width=100 >
+      </a>
+    </div>
+    <!-- the preview div, this is where the user gets a preview of the puzzle when he or she scrolls over the image on the menu -->
+    <div class="preview"></div>
+    <!-- the winner div, this is where the user gets to see the complete image after he or she puts it together-->
+    <div class="winner"></div>
+    <!-- the main div, this is the "board" with a table containing a bunch of "drop" divs that will be filled with
+      droppables. the ids of the droppables are important and will match up with the ids of the right pieces of the puzzle -->
+    <div class="main">
+      <table class="table">
+        <tr>
+          <td><div class="drop" id="1"></div> </td>
+          <td><div class="drop" id="2"></div> </td>
+          <td><div class="drop" id="3"></div> </td>
+          <td><div class="drop" id="4"></div> </td>
+          <td><div class="drop" id="5"></div> </td>
+        </tr>
+        <tr>
+          <td><div class="drop" id="6"></div> </td>
+          <td><div class="drop" id="7"></div> </td>
+          <td><div class="drop" id="8"></div> </td>
+          <td><div class="drop" id="9"></div> </td>
+          <td><div class="drop" id="10"></div> </td>
+        </tr>
+        <tr>
+          <td><div class="drop" id="11"></div> </td>
+          <td><div class="drop" id="12"></div> </td>
+          <td><div class="drop" id="13"></div> </td>
+          <td><div class="drop" id="14"></div> </td>
+          <td><div class="drop" id="15"></div> </td>
+        </tr>
+        <tr>
+          <td><div class="drop" id="16"></div> </td>
+          <td><div class="drop" id="17"></div> </td>
+          <td><div class="drop" id="18"></div> </td>
+          <td><div class="drop" id="19"></div> </td>
+          <td><div class="drop" id="20"></div> </td>
+        </tr>
+        <tr>
+          <td><div class="drop" id="21"></div> </td>
+          <td><div class="drop" id="22"></div> </td>
+          <td><div class="drop" id="23"></div> </td>
+          <td><div class="drop" id="24"></div> </td>
+          <td><div class="drop" id="25"></div> </td>
+        </tr>
+      </table>
+    </div>
+    <!-- this is the div that will contain the pieces of the jigsaw puzzle-->
+    <div class="pieces">
+    </div>
+    <div class="footer">
+    <hr>
+    <p><i>
+      Made by Arvind Shrihari and Stephen Marin<br>SocketStream support added by Logan Allred
+    </i></p>
+
+      <small>Powered by <a href="http://socketstream.org/">Socket Stream!<img src="/images/logo.png" alt="SocketStream Logo" width="60" height="60">
+      </a></small>
+
+      <!-- QUICK CHAT DEMO-->
+      <form id="demo" onsubmit="return false">
+        <h3>Quick Chat Demo</h3>
+        <h5>Open this page in multiple tabs or browsers and type a message below</h5>
+        <div id="chatlog"></div>
+        <input id="myMessage" type="text" autocomplete="off">
+      </form>
+    </div>
+   </div>
+  </body>
+</html>
