@@ -6,10 +6,14 @@
   <p>Work together to match temples to names. Results are on the left. Ask
     questions or share cheats to the right.</p>
 
-  <h2 class='myScore'>My Score {.myScore}</h2>
+  <h2 class='myScore'>My Score </h2>
 
   <ol class="temples cf">
-
+    <!-- Hack !!! - The following code should work, but there seems to be a derby bug -->
+    <!-- display works with loop but binding doesn't -->
+    <!--{#each temples}-->
+    <!--<app:temple-play>-->
+    <!--{/}-->
     <li class="temple-selection"> <div href="#" class="{.temples.0.matched} cf" index="0" foundBy='{.temples.0.foundBy}'><img data-name="{{.temples.0.name}}" src="{.temples.0.playImage}" alt="temple" class="temple-image cf"/><input  type="text"><select name=select1 x-bind="change:checkForMatch"><option>Select Temple</option>{#each temples as:temple2}<option>{{name}}</option>{/}</select><h4>{{.temples.0.name}} {.temples.0.foundBy}</h4></div></li>
     <li class="temple-selection"> <div href="#" class="{.temples.1.matched} cf" index="1" foundBy="{.temples.1.foundBy}"><img data-name="{{.temples.1.name}}" src="{.temples.1.playImage}" alt="temple" class="temple-image cf"/><input  type="text"><select name=select1 x-bind="change:checkForMatch"><option>Select Temple</option>{#each temples as:temple2}<option>{{name}}</option>{/}</select><h4>{{.temples.1.name}} {.temples.1.foundBy}</h4></div></li>
     <li class="temple-selection"> <div href="#" class="{.temples.2.matched} cf" index="2" foundBy="{.temples.2.foundBy}"><img data-name="{{.temples.2.name}}" src="{.temples.2.playImage}" alt="temple" class="temple-image cf"/><input  type="text"><select name=select1 x-bind="change:checkForMatch"><option>Select Temple</option>{#each temples as:temple2}<option>{{name}}</option>{/}</select><h4>{{.temples.2.name}} {.temples.2.foundBy}</h4></div></li>
@@ -173,6 +177,21 @@
     <li class="temple-selection"> <div href="#" class="{.temples.146.matched} cf" index="146" foundBy="{.temples.146.foundBy}"><img data-name="{{.temples.146.name}}" src="{.temples.146.playImage}" alt="temple" class="temple-image cf"/><input  type="text"><select name=select1 x-bind="change:checkForMatch"><option>Select Temple</option>{#each temples as:temple2}<option>{{name}}</option>{/}</select><h4>{{.temples.146.name}} {.temples.146.foundBy}</h4></div></li>
     <li class="temple-selection"> <div href="#" class="{.temples.147.matched} cf" index="147" foundBy="{.temples.147.foundBy}"><img data-name="{{.temples.147.name}}" src="{.temples.147.playImage}" alt="temple" class="temple-image cf"/><input  type="text"><select name=select1 x-bind="change:checkForMatch"><option>Select Temple</option>{#each temples as:temple2}<option>{{name}}</option>{/}</select><h4>{{.temples.147.name}} {.temples.147.foundBy}</h4></div></li>
 
-
   </ol>
   {{/}}
+
+<!-- HACK alert the following code should work but dynamic binding fails in version of derby -->
+<!--<li class="temple-selection">-->
+  <!--<div > {matched}-->
+
+    <!--<img data-name="{{name}}" src="{{playImage}}" alt="temple"-->
+         <!--class="temple-image cf"/>-->
+    <!--<input  type="text">-->
+    <!--<select name=select1 x-bind="change:checkForMatch">-->
+      <!--<option>Select Temple</option>-->
+      <!--{#each temples as:temple2}-->
+      <!--<option>{{name}}</option>-->
+      <!--{/}-->
+    <!--</select>-->
+  <!--</div>-->
+<!--</li>-->

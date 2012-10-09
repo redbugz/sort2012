@@ -1,6 +1,9 @@
 var derby = require('derby')
-  , app = derby.createApp(module)
-  , get = app.get;
+    , app = derby.createApp(module)
+    , get = app.get
+    , render
+    , view = app.view
+    , ready = app.ready;
 
 require('./subnav');
 
@@ -12,6 +15,49 @@ require('./temple-state');
 
 derby.use(require('derby-ui-boot'))
 derby.use(require('../../ui'))
+
+////////////////////////////////////////////////////////////
+
+
+get('/lobby', function(page, model, _arg) {
+  var room, roomName;
+  room = _arg.room;
+
+  if (!(room && /^[-\w ]+$/.test(room))) {
+    return page.redirect('/lobby');
+  }
+  roomName = room.toLowerCase().replace(/[_ ]/g, '-');
+  if (roomName !== room) {
+    return page.redirect("/" + roomName);
+  }
+  return model.subscribe("rooms." + roomName, 'users', function(err, room, users) {
+    var userId;
+    model.ref('_room', room);
+    userId = model.get('_userId');
+    model.ref('_user', users.at(userId));
+    if (users.get(userId)) {
+      return render(page, model);
+    }
+    return model.async.incr('config.chat.userCount', function(err, userCount) {
+      users.set(userId, {
+        name: 'User ' + userCount,
+      });
+      return render(page, model);
+    });
+  });
+});
+
+render = function(page, model) {
+  model.setNull('_room.messages', []);
+  model.set('_newComment', '');
+  model.fn('_numMessages', '_room.messages', function(messages) {
+    return messages.length;
+  });
+  return page.render();
+};
+
+
+//////////////////////////////////////////////////
 
 var temples = [
   {name:'Aba Nigeria', hide:'hide', image:'images/aba-nigeria-214x128-050816_jrn013.jpg', playImage:'images/aba-nigeria-214x128-050816_jrn013.jpg' , foundBy:false, matched:"notMatched" },
@@ -181,26 +227,15 @@ for (var i=0; i < temples.length; i++) {
 var scores = [{name:'Arnold', count:1}];
 
 var chats = [
-  {name:'Arnold', message:"Hello"},
-  {name:'Betty', message:"How are you ?"}
-]
+//  {name:'Arnold', message:"Hello"},
+//  {name:'Betty', message:"How are you ?"}
+];
 
 var localPage;
 
 var templeModel = function(page, model) {
   console.log(model.get());
-  model.subscribe('state', function(err, state) {
-    state.setNull('numbers', [
-      {text: 'First'}
-      , {text: 'Second'}
-      , {text: 'Third'}
-    ])
-    state.setNull('colors', [
-      {text: 'Red'}
-      , {text: 'Orange'}
-      , {text: 'Purple'}
-    ])
-
+  return model.subscribe('state', function(err, state) {
     state.setNull('temples', temples)
     state.setNull('scores', scores)
     state.setNull('chats', chats)
@@ -212,13 +247,40 @@ var templeModel = function(page, model) {
     page.render()
   })
 
-//  model.subscribe('state.temples', function(err, temples) {
-//    page.render();
-//  });
 };
 
+var chatModel = function(page, model) {
+  //  if (!(room && /^[-\w ]+$/.test(room))) {
+//    return page.redirect('/lobby');
+//  }
+//  roomName = room.toLowerCase().replace(/[_ ]/g, '-');
+//  if (roomName !== room) {
+//    return page.redirect("/" + roomName);
+//  }
+  var roomName = "lobby";
+  var room = "lobby";
+  return model.subscribe("rooms." + roomName, 'users', function(err, room, users) {
+    var userId;
+    model.ref('_room', room);
+    userId = model.get('_userId');
+    model.ref('_user', users.at(userId));
+    if (users.get(userId)) {
+      return render(page, model);
+    }
+    return model.async.incr('config.chat.userCount', function(err, userCount) {
+      users.set(userId, {
+        name: 'User ' + userCount
+      });
+      return render(page, model);
+    });
+  });
+
+}
+
+
+
 get('/', templeModel);
-get('/chat', templeModel);
+get('/chat', chatModel);
 get('/play', templeModel);
 
 
@@ -373,5 +435,68 @@ app.ready(function(model) {
   app.checkForMatch = function (e) {
     checkForMatch(e);
   }
+
+  ///////////////////////////////////////////
+  var atBottom, displayTime, messageList, messages, months;
+  months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  displayTime = function(time) {
+    var hours, minutes, period;
+    time = new Date(time);
+    hours = time.getHours();
+    period = hours < 12 ? ' am, ' : ' pm, ';
+    hours = (hours % 12) || 12;
+    minutes = time.getMinutes();
+    if (minutes < 10) {
+      minutes = '0' + minutes;
+    }
+    return hours + ':' + minutes + period + months[time.getMonth()] + ' ' + time.getDate() + ', ' + time.getFullYear();
+  };
+  this.on('render', function() {
+    var i, message, _i, _len, _ref1, _results;
+    _ref1 = model.get('_room.messages');
+    _results = [];
+    for (i = _i = 0, _len = _ref1.length; _i < _len; i = ++_i) {
+      message = _ref1[i];
+      _results.push(model.set("_room.messages." + i + "._displayTime", displayTime(message.time)));
+    }
+    return _results;
+  });
+  model.set('_showReconnect', true);
+  exports.connect = function() {
+    model.set('_showReconnect', false);
+    setTimeout((function() {
+      return model.set('_showReconnect', true);
+    }), 1000);
+    return model.socket.socket.connect();
+  };
+  exports.reload = function() {
+    return window.location.reload();
+  };
+  messages = document.getElementById('messages');
+  messageList = document.getElementById('messageList');
+  atBottom = true;
+  model.on('pre:push', '_room.messages', function() {
+    var bottom, containerHeight, scrollBottom;
+    bottom = messageList.offsetHeight;
+    containerHeight = messages.offsetHeight;
+    scrollBottom = messages.scrollTop + containerHeight;
+    return atBottom = bottom < containerHeight || scrollBottom === bottom;
+  });
+  model.on('push', '_room.messages', function(message, len, isLocal) {
+    if (isLocal || atBottom) {
+      messages.scrollTop = messageList.offsetHeight;
+    }
+    return model.set("_room.messages." + (len - 1) + "._displayTime", displayTime(message.time));
+  });
+  return exports.postMessage = function() {
+    model.push('_room.messages', {
+      userId: model.get('_userId'),
+      comment: model.get('_newComment'),
+      time: +(new Date)
+    });
+    return model.set('_newComment', '');
+  };
+
+
 
 })

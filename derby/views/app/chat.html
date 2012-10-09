@@ -12,3 +12,37 @@
     {/}
   </div>
   {{/}}
+
+  <div id=page>
+
+    <div id=foot>
+      <div id=inputs>
+        <div>
+          <span class="">Name: </span>
+          <input id=inputName value={_user.name}>
+        <div>
+        <span class="">Text: </span>
+        <form id=inputForm x-bind=submit:postMessage>
+          <input id=commentInput value={_newComment} autofocus>
+          </form>
+        </div>
+        </div>
+    </div>
+    <div id=messages>
+      <ul id=messageList>
+        {#each _room.messages}
+        <app:message>
+          {/}
+      </ul>
+    </div>
+  </div>
+
+  <message:>
+    <li>
+      <!-- Square brackets support creation of a path based on another path -->
+      <div class=message>
+        <p class=time>{._displayTime}</p>
+        <p><b>{users[userId].name}</b></p>
+        <p>{{comment}}</p>
+      </div>
+    </li>
