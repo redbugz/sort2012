@@ -4,8 +4,10 @@
 
 	var socket = io.connect(window.location.origin);
 	var socketId = Math.random().toString().slice(2);
-	
+	var participantSocketId = Math.random().toString().slice(2);
+
 	console.log('View slide notes at ' + window.location.origin + '/notes/' + socketId);
+	console.log('View participant slide notes at ' + window.location.origin + '/demo');
 
 	Reveal.addEventListener( 'slidechanged', function( event ) {
 		var nextindexh;
@@ -32,4 +34,12 @@
 
 		socket.emit('slidechanged', slideData);
 	} );
+
+  var ticker = document.getElementById('chat-ticker');
+  socket.on("chatmessage", function (data) {
+    console.log("client received chatmessage: " + data);
+    var authorspan = '<span class="author">' + data.author + '</span>';
+    var messagespan = '<span class="chat-message">' + data.message + '</span>';
+    ticker.innerHTML = authorspan + messagespan;
+  });
 }());
