@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="lib/css/bootstrap.css">
     <link rel="stylesheet" href="lib/css/bootstrap-responsive.css">
+    <link rel="stylesheet" href="lib/css/chat.css">
 		<style>
 			body {
 				font-family: Helvetica;
@@ -15,7 +16,7 @@
 
 			#notes {
 				font-size: 24px;
-				width: 640px;
+				/*width: 640px;*/
 				margin-top: 5px;
 			}
 
@@ -78,6 +79,16 @@
 			.reveal aside.notes {
 				display:block;
 			}
+
+      #chatlog .me {
+        color: #a9a9a9;
+      }
+      #chatlog .author {
+        margin-right: 5px;
+      }
+      #notes {
+        min-height: 50px;
+      }
 		</style>
 	</head>
 
@@ -86,22 +97,46 @@
 		<!--<div id="wrap-current-slide" class="slides">-->
 			<!--<iframe src="/?receiver" width="1280" height="1024" id="current-slide"></iframe>-->
 		<!--</div>-->
+    <div class="container">
 
-    <div id="wrap-next-slide" class="chat">
-      <form id="demo" onsubmit="return false">
-        <h3>Live Chat</h3>
-        <h5>Share a message with the other participants</h5>
-        <input id="myName" type="text" autocomplete="off" placeholder="What is your name?" value="Guest">
-        <input id="myMessage" type="text" autocomplete="off" placeholder="What would you like to say?">
-        <button id="sendBtn">Send</button>
-        <div id="chatlog"></div>
-        <div id="connectedCount"><span>0</span> people connected.</div>
-      </form>
-      <div id="notes"></div>
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div id="notes" class="well">&nbsp;</div>
 
-      <!--<iframe src="/?receiver" width="640" height="512" id="next-slide"></iframe>-->
-			<!--<span>UPCOMING:</span>-->
-		</div>
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="span4">
+          <h4>Links</h4>
+          <ul>
+            <li><a target="_blank" href="http://192.168.1.101:1337/">Simple Chat (Now.js)</a></li>
+            <li><a target="_blank" href="http://192.168.1.101:8080/">Temple Game Dashboard</a></li>
+            <li><a target="_blank" href="http://192.168.1.101:8080/play">Play Temple Match Game</a></li>
+            <li><a target="_blank" href="http://192.168.1.101:3005/">Temple Game Dashboard</a></li>
+            <li><a target="_blank" href="http://192.168.1.101:3005/play">Play Temple Match Game</a></li>
+          </ul>
+          <ul>
+            <li><a target="_blank" href="http://192.168.1.104:3000/">Chat</a></li>
+            <li><a target="_blank" href="http://192.168.1.104:3030/">Puzzle</a></li>
+            <li><a target="_blank" href="http://192.168.1.104:4000/">CPU Monitor</a></li>
+            <li><a target="_blank" href="http://192.168.1.104:6789/">Magnets (Socket.io)</a></li>
+            <li><a target="_blank" href="http://192.168.1.104:6789/">Magnets (Meteor)</a></li>
+          </ul>
+        </div>
+        <div id="wrap-next-slide1" class="chat span6">
+          <form id="demo" onsubmit="return false">
+            <h4>Live Chat</h4>
+            <h5>Share a message with the other participants</h5>
+            <input id="myName" class="input-small" type="text" autocomplete="off" placeholder="What is your name?" value="Guest">
+            <input id="myMessage" type="text" autocomplete="off" placeholder="What would you like to say?">
+            <button id="sendBtn">Send</button>
+            <div id="chatlog"></div>
+            <!--<div id="connectedCount"><span>0</span> people connected.</div>-->
+          </form>
+
+          <!--<iframe src="/?receiver" width="640" height="512" id="next-slide"></iframe>-->
+          <!--<span>UPCOMING:</span>-->
+        </div>
+      </div>
+    </div>
 
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="/lib/js/jquery-1.8.2.js"></script>
@@ -115,7 +150,7 @@
 		var nextSlide = document.getElementById('next-slide');
 
     socket.on('slidedata', function(data) {
-      console.log("received slidedata: " + data);
+      console.log("received slidedata: " + JSON.stringify(data));
       // ignore data from sockets that aren't ours
 			if (data.socketId !== socketId) { return; }
 
@@ -125,9 +160,7 @@
 		});
 		socket.on('chatmessage', function(data) {
       console.log("received chatmessage: " + JSON.stringify(data));
-      var authorInfo = $('<span class="author"></span>').text(data.author);
-      var messageInfo = $('<span class="chat-message"></span>').text(data.message);
-      $('<div class="chat-message"></div>').append(authorInfo).append("&nbsp;|&nbsp;").append(messageInfo).appendTo("#chatlog");
+      addChatMessage(data.author, data.message);
 		});
 		socket.on('statusmessage', function(data) {
       console.log("received statusmessage: " + data);
@@ -141,6 +174,11 @@
       console.log("received welcommessage: " + data);
 			notes.innerHTML = data;
 		});
+    function addChatMessage(author, message) {
+      var authorInfo = $('<span class="author label label-info"></span>').text(author);
+      var messageInfo = $('<span class="chat-message"></span>').text(message);
+      return $('<div class="chat-message"></div>').hide().append(authorInfo).append(messageInfo).prependTo("#chatlog").slideDown();
+    }
 
       $(document).ready(function() {
         $("#sendBtn").click(function() {
@@ -150,6 +188,8 @@
           }
           console.log("send message: " + JSON.stringify(message));
           socket.emit("sendChatMessage", message);
+          addChatMessage(message.author, message.message).addClass("me");
+          $("#myMessage").val("");
         })
       });
 		</script>

@@ -39,7 +39,7 @@ app.get('/play', function(req, res){
   }});
 });
 
-app.listen(8080);
+app.listen(3030);
 console.log("Express server listening on port %d", app.address().port);
 
 // Default values for temple data
