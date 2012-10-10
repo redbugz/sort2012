@@ -207,7 +207,7 @@ for (var i=0; i < temples.length; i++) {
 var scores = {};
 
 
-// NowJS components
+// NowJS components #########################################################
 var nowjs = require("now");
 var everyone = nowjs.initialize(app);
 

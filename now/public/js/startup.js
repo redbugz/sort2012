@@ -14,7 +14,7 @@
 
   var nameAdded = false;
 
-  // Create WebSocket now connection before gathering name
+  // provide function for the server to call after creating a WebSocket connection
   now.connectComplete = function () {
     if (!nameAdded && now.addName)  {
 
@@ -64,6 +64,8 @@
       $('div.chat').removeClass('hide');
     });
 
+
+    // Client calls into
     now.receiveTempleStatus = function(name, state){
       myTempleState.receiveTempleStatus(name, state);
       myPlay.receiveTempleStatus(name,state);
