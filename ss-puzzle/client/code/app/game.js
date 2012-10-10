@@ -10,32 +10,23 @@ $(document).ready(function(){
 	// this function loads the pieces for the puzzle specified by the parameter imgType
 	// onto the screen randomly. it generates numbers randomly between 25 and stores them in an array in order to ensure 
 	// the numbers genrated are unique.
-	function loadImages(imgType){
-		var rand = [];			// this array holds the 25 ids before they are randomized
-	        for(i = 1; i < 26; i++){
-	        	rand.push(i);
-	        }
-	        
-		 // this algorithm for randomizing the array was taken from the article "Extending JavaScript Arrays" @ http://www.go4expert.com/forums/showthread.php?t=606
-        var tmp, num1, i = rand.length;
-		while(i--)
-		{
-		         num1=Math.floor((i+1)*Math.random());
-		         tmp=rand[i];
-		         rand[i]=rand[num1];
-		         rand[num1]=tmp;
-        }
-        jQuery.each(rand,function(i){	// the images are created and added to the pieces div
-                img = "images/" + imgType +"/" + imgType + "_" + this +".gif"; // the image path is set
-                pic = new Image();					
-                $(pic).addClass("piece");		
-                $(pic).data("piece-id", this.toString());
-          console.log("piece id", this.toString());
-                $(pic).attr({value:imgType});
-                pic.src = img;
-                $(".pieces").append(pic);               
-		});
-    };
+  function loadImages(imgType, rand) {
+    jQuery.each(rand, function (i, val) {  // the images are created and added to the pieces div
+      addPieceImage(imgType, val);
+    });
+    setPiecesDraggable();
+  };
+
+  function addPieceImage(imgType, pieceId) {
+    img = "images/" + imgType +"/" + imgType + "_" + pieceId +".gif"; // the image path is set
+    pic = new Image();
+    $(pic).addClass("piece");
+    $(pic).data("piece-id", pieceId);
+    console.log("piece id", pieceId);
+    $(pic).attr({value:imgType});
+    pic.src = img;
+    $(".pieces").append(pic);
+  }
     	
     	//sets the images in the pieces div as draggable objects
     function setPiecesDraggable(){
@@ -44,12 +35,39 @@ $(document).ready(function(){
                 opacity: 0.5,
                 scroll: false,
                 snap: ".drop",
-                snapMode: "inner"
+                snapMode: "inner",
+                drag: sendUpdate,
+                stop: sendStopUpdate
         });
     };
-		
-    	
-	// this controls what happens when the user selects a jigsaw puzzle by clicking on it
+var dragging = false;
+  sendUpdate = function(e, ui) {
+    var params;
+    dragging = e.target;
+    var pieceData = {
+      pieceId: $(e.target).data("piece-id"),
+      pieceOffset: ui.offset,
+      piecePosition: ui.position
+    }
+    console.log("piece moved send update: " + JSON.stringify(pieceData));
+    ss.rpc('puzzle.pieceMoved', pieceData);
+  };
+
+  sendStopUpdate = function(e) {
+    var params;
+    dragging = false;
+    params = {
+      id: $(e.target).data('word'),
+      offset: $(e.target).offset(),
+      position: $(e.target).position()
+    };
+    console.log("piece stopped moving send update: " + params);
+//    return socket.emit('stop_update', params);
+  };
+
+
+
+  // this controls what happens when the user selects a jigsaw puzzle by clicking on it
 	$(".imgs").click(function (){
 		// the preview and winner divs are emptied and hidden
 		$(".preview").empty();
@@ -63,8 +81,7 @@ $(document).ready(function(){
 		$(".instructions").empty();
 		$(".instructions").append("Drag the puzzle pieces onto the board. Move your cursor over the menu thumbnail to see what the finished image is supposed to look like.");
 		$(".pieces").empty();
-		loadImages(picID);
-		setPiecesDraggable();
+    ss.rpc("puzzle.choosePuzzle", picID);
 //    console.log("sending choosePuzzle event: " + picID);
 //    ss.rpc('demo.choosePuzzle', picID);
 	});
@@ -120,4 +137,29 @@ $(document).ready(function(){
 			}
 		}
 	});
+
+  ss.event.on("choosePuzzle", function(puzzleData) {
+    console.log("client received choosePuzzle: ", JSON.stringify(puzzleData));
+    loadImages(puzzleData.puzzleId, puzzleData.piecesOrder);
+  });
+  ss.event.on("addPiece", function(pieceData) {
+    console.log("client received addPiece: ", JSON.stringify(pieceData));
+    if (pieceData && pieceData.imgName && pieceData.pieceId) {
+      addPieceImage(pieceData.imgName, pieceData);
+    }
+  });
+  ss.event.on("pieceMoved", function(pieceData) {
+    console.log("client received pieceMoved: ", JSON.stringify(pieceData));
+//    var selector = cached[data.id] || (function() {
+//      cached[data.id] = $("[data-word='" + data.id + "']");
+//      return cached[data.id];
+//    })();
+    // don't update position if we're the one dragging
+    if (!dragging || $(dragging).data("piece-id") !== pieceData.pieceId) {
+      $('.piece').filter(function() {
+        console.log("updating piece position: " + pieceData.pieceId);
+        return $(this).data('piece-id') === pieceData.pieceId;
+      }).offset(pieceData.pieceOffset);
+    }
+  });
 });

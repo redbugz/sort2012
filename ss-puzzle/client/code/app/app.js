@@ -15,11 +15,6 @@ ss.event.on('newMessage', function(message) {
   return $(html).hide().appendTo('#chatlog').slideDown();
 });
 
-ss.event.on('choosePuzzle', function(puzzleId) {
-  console.log("received choosePuzzle event: " + puzzleId);
-  $(".imgs#"+puzzleId).click();
-});
-
 // Show the chat form and bind to the submit action
 $('#demo').on('submit', function() {
 

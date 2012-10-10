@@ -18,15 +18,6 @@ exports.actions = function(req, res, ss) {
       } else {
         return res(false);
       }
-    },
-
-    choosePuzzle: function(puzzleId) {
-      if (puzzleId && puzzleId.length > 0) {         // Check for blank messages
-        ss.publish.all('choosePuzzle', puzzleId);     // Broadcast the message to everyone
-        return res(true);                          // Confirm it was sent to the originating client
-      } else {
-        return res(false);
-      }
     }
 
   };
