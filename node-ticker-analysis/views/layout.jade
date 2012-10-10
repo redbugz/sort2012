@@ -1,0 +1,16 @@
+!!! 5
+html(lang="en", xmlns="http://www.w3.org/1999/xhtml")
+  head
+    title= pageTitle
+    link(rel="stylesheet", href="/media/css/main.css", type="text/css")
+    link(rel="stylesheet", href="/media/css/colors.css", type="text/css")
+    link(rel="stylesheet", href="/media/css/local.css", type="text/css")
+    script(src="/lib/dojo.xd.js", djConfig="parseOnLoad: true")
+    script(src="/socket.io/socket.io.js")
+    script(src="/lib/app/app.js")
+
+body.nihilo
+#page
+  #container
+    #content.no-side-nav
+      != body

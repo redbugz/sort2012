@@ -45,7 +45,7 @@ io.sockets.on('connection', function(socket) {
   var welcomeMessages = [
     "Welcome to Real Time Web Apps with Node.js",
     "These are the participant notes. They will allow you to interact during the presentation",
-    "There is live chat. Join in the conversation!",
+    "There is live chat below. Join in the conversation!",
     "We hope you enjoy the presentation"
   ];
   var tickerSender;
@@ -57,9 +57,9 @@ io.sockets.on('connection', function(socket) {
     console.log("sending ticker event: " + message);
     socket.broadcast.emit("welcomemessage", message);
 
-    var timeout = Math.round(Math.random() * 7000);
-    if(timeout < 3000) {
-      timeout += 3000;
+    var timeout = Math.round(Math.random() * 10000);
+    if(timeout < 5000) {
+      timeout += 5000;
     }
     curIndex++;
     curIndex = curIndex % welcomeMessages.length;

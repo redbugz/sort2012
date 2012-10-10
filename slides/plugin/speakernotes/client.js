@@ -37,7 +37,7 @@
 
   var ticker = document.getElementById('chat-ticker');
   socket.on("chatmessage", function (data) {
-    console.log("client received chatmessage: " + data);
+    console.log("client received chatmessage: " + JSON.stringify(data));
     var authorspan = '<span class="author">' + data.author + '</span>';
     var messagespan = '<span class="chat-message">' + data.message + '</span>';
     ticker.innerHTML = authorspan + messagespan;

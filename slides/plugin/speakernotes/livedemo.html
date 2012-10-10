@@ -108,17 +108,17 @@
           <h4>Links</h4>
           <ul>
             <li><a target="_blank" href="http://192.168.1.101:1337/">Simple Chat (Now.js)</a></li>
-            <li><a target="_blank" href="http://192.168.1.101:8080/">Temple Game Dashboard</a></li>
             <li><a target="_blank" href="http://192.168.1.101:8080/play">Play Temple Match Game</a></li>
-            <li><a target="_blank" href="http://192.168.1.101:3005/">Temple Game Dashboard</a></li>
+            <li><a target="_blank" href="http://192.168.1.101:8080/">Temple Game Dashboard</a></li>
             <li><a target="_blank" href="http://192.168.1.101:3005/play">Play Temple Match Game</a></li>
+            <li><a target="_blank" href="http://192.168.1.101:3005/">Temple Game Dashboard</a></li>
           </ul>
           <ul>
-            <li><a target="_blank" href="http://192.168.1.104:3000/">Chat</a></li>
-            <li><a target="_blank" href="http://192.168.1.104:3030/">Puzzle</a></li>
-            <li><a target="_blank" href="http://192.168.1.104:4000/">CPU Monitor</a></li>
-            <li><a target="_blank" href="http://192.168.1.104:6789/">Magnets (Socket.io)</a></li>
-            <li><a target="_blank" href="http://192.168.1.104:6789/">Magnets (Meteor)</a></li>
+            <li><a target="_blank" href="http://192.168.1.102:3000/">Balloons.io Chat</a></li>
+            <li><a target="_blank" href="http://192.168.1.102:8000/">CPU Monitor</a></li>
+            <li><a target="_blank" href="http://192.168.1.102:4000/">Ticker</a></li>
+            <li><a target="_blank" href="http://192.168.1.102:6789/">Magnets (Socket.io)</a></li>
+            <li><a target="_blank" href="http://192.168.1.102:6789/">Magnets (Meteor)</a></li>
           </ul>
         </div>
         <div id="wrap-next-slide1" class="chat span6">
@@ -171,7 +171,7 @@
       $('#connectedCount span').text(data);
 		});
 		socket.on('welcomemessage', function(data) {
-      console.log("received welcommessage: " + data);
+      console.log("received welcomemessage: " + data);
 			notes.innerHTML = data;
 		});
     function addChatMessage(author, message) {

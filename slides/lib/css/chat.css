@@ -15,7 +15,7 @@
   border-radius: 5px;
 }
 #demo #myMessage {
-  /*width: 690px;*/
+  width: 85%;
   padding: 5px;
 }
 #demo #chatlog {

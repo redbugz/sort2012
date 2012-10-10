@@ -1,0 +1,63 @@
+<head>
+  <link rel="stylesheet" href="/style/main.css">
+  <!--<script src="/javascript/jquery.1.7.2.js"></script>-->
+  <script src="/javascript/jquery.ui.js"></script>
+  <script src="/javascript/jquery.ui.touch.0.2.2.js"></script>
+  <!--<script src="/javascript/_.1.3.3.js"></script>-->
+  <!--<link href="http://fonts.googleapis.com/css?family=Signika:400,300" rel="stylesheet" type="text/css">-->
+  <!--<script src="/javascript/magnets.js"></script>-->
+</head>
+<body>
+{{> header }}
+{{> wordBoard }}
+{{> add-word-form }}
+</body>
+
+<template name="header">
+  <div id="header">
+    <div id="sub_header">
+      <div class="inner">
+        <div id="logo" class="left">MagBoard</div>
+        <a id="add_word" class="right no_select btn green">+ Add a Word</a>
+        <a id="clear_words" class="right no_select btn">- Clear All Words</a>
+        <div id="stats" class="right">
+          <div id="people_online" class="right stat_hold"><span class="count">{{#if connectedCount}}{{connectedCount}}{{else}}?{{/if}}</span><span class="words">online</span>
+          </div>
+          <div id="word_count" class="right stat_hold"><span class="count">{{wordCount}}</span><span
+              class="words">words on board</span></div>
+        </div>
+        <div class="cl"></div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="add-word-form">
+  <div id="add_word_form" style="display: none" class="inactive">
+    <div class="inner"><input type="text" placeholder="your word?" class="center"><br><a
+        class="btn no_select green right add">+ Add It</a><a class="btn no_select red right close">- Nevermind</a>
+      <div class="cl"></div>
+      OR Add an Article of Faith:
+      <div class="aof-buttons"><a data-aof='1' class="btn no_select small green">1</a><a data-aof='2' class="btn no_select small green">2</a><a
+          data-aof='3' class="btn no_select small green">3</a><a data-aof='4' class="btn no_select small green">4</a><a
+          data-aof='5' class="btn no_select small green">5</a><a data-aof='6' class="btn no_select small green">6</a><a
+          data-aof='7' class="btn no_select small green">7</a><a data-aof='8' class="btn no_select small green">8</a><a
+          data-aof='9' class="btn no_select small green">9</a><a data-aof='10' class="btn no_select small green">10</a><a
+          data-aof='11' class="btn no_select small green">11</a><a data-aof='12' class="btn no_select small green">12</a><a
+          data-aof='13' class="btn no_select small green">13</a></div>
+    </div>
+  </div>
+</template>
+
+<template name="wordBoard">
+  <div id="hold">
+    {{#each words}}
+      {{> magnet}}
+    {{/each}}
+  </div>
+</template>
+
+
+<template name="magnet">
+  <div class="magnet no_select" style="left: {{position.left}}px; top: {{position.top}}px" data-word="{{_id}}">{{word}}</div>
+</template>
