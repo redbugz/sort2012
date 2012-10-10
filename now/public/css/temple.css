@@ -1,4 +1,16 @@
-#temple-state iframe, #floater iframe {
+.row-fluid .span3, .row-fluid .span6 {
+  width:90%
+}
+
+.all .row-fluid .span3 {
+  width:25%;
+}
+
+.all .row-fluid .span6 {
+  width:45%;
+}
+
+.all #temple-state iframe, #floater iframe {
 	border: black solid 5px;
 	padding: 20px;
 	padding-right: 20px;
@@ -6,11 +18,13 @@
   min-height: 480px;
 }
 
-/*input#send-button {*/
-	/*position: fixed;*/
-	/*top: 10px;*/
-	/*left: 130px;*/
-/*}*/
+.span3 {
+  min-width: 245px;
+}
+
+.span6 {
+  min-width:400px;
+}
 
 #text-input {
  margin-bottom:0;
@@ -23,7 +37,6 @@ ol.temples {
   padding-left: 0;
 }
 
-
 ol.temples li {
 	position:relative; /* Create a positioning context */
     margin:0 0 6px 2em; /* Give each list item a left margin to make room for the numbers */
@@ -35,11 +48,12 @@ ol.temples li {
     margin:50px;
 }
 
-ol.temples li a { display:block; }
+ol.temples li a {
+  display:block;
+  width: 220px;
+}
 
 .temples img.temple-image {
-  /*height: 358px;*/
-  /*width: 600px;*/
   min-width: 128px;
   max-height: 214px;
   font-size:18px;
@@ -53,14 +67,6 @@ ul.temple-results img.temple-image {
   clear:both;
 }
 
-/*img.temple-image.large {*/
-	/*height: 256px;*/
-	/*width: 428px;*/
-	/*height: 358px;*/
-	/*width: 600px;*/
-	/*font-size:18px;*/
-/*}*/
-
 img.temple-image.selected {
 	border: green solid 5px;
 }
@@ -69,9 +75,9 @@ li a.selected {
 	border: green solid 5px;
 }
 
-/*li a select { display:none;}*/
-
-li a.selected select {display:inline-block;}
+li a.selected select {
+  display:inline-block;
+}
 
 ol.temples h4 { 
 	-webkit-margin-after: 0;
@@ -79,43 +85,20 @@ ol.temples h4 {
 	font-size:10px;
 }
 
-/*ol.temples select {*/
-  /*width:120px;*/
-/*}*/
-
 /* For modern browsers */
 .cf:before,
 .cf:after {content:""; display:table;clear:both;}
-/* For IE 6/7 (trigger hasLayout) */
 
+/* For IE 6/7 (trigger hasLayout) */
 .cf {zoom:1;}
 
 #messages {
   margin-top: 30px;
 }
 
-ul.scores {
-  /*list-style: none;*/
-  /*position: fixed;*/
-  /*top: 10px;*/
-  /*right: 100px;*/
-}
-
-a input {
-  margin:10px;
-}
-
+a input,
 a select {
-  margin:10px;
-
-}
-
-a.selected input {
-
-}
-
-a.selected select {
-
+  margin-top:10px;
 }
 
 .main-header {

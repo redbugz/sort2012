@@ -2,16 +2,19 @@ var express = require('express');
 
 var app = express.createServer();
 
-// Configuration
-
+// Configure express
 app.set('views', __dirname + '/views');
+
+// Use ejs templating
 app.set('view engine', 'ejs');
+
+// setup the less compiler
 app.use(express.compiler({ src : __dirname + '/public', enable: ['less']}));
+
+// static serving of files from the public directory
 app.use(express.static(__dirname + '/public'));
 
-
-// Routes
-
+// Setup subnav routes allow the app to load the play, chat or both
 app.get('/', function(req, res){
   res.render('index', {locals: {
     title: 'NowJS'
@@ -39,7 +42,7 @@ app.get('/play', function(req, res){
 app.listen(8080);
 console.log("Express server listening on port %d", app.address().port);
 
-
+// Default values for temple data
 var temples = [
   {name:'Aba Nigeria', image:'images/aba-nigeria-214x128-050816_jrn013.jpg', status:'UNIDENTIFIED'},
   {name:'Accra Ghana', image:'images/accra-ghana-214x128-050816_jrn009.jpg', status:'UNIDENTIFIED'},
@@ -196,6 +199,7 @@ var temples = [
 
 ];
 
+// the index provides direct access without looping through the array to find a temple
 for (var i=0; i < temples.length; i++) {
   temples[i].index = i;
 }
@@ -203,11 +207,15 @@ for (var i=0; i < temples.length; i++) {
 var scores = {};
 
 
-// NowJS component
+// NowJS components
 var nowjs = require("now");
 var everyone = nowjs.initialize(app);
+
+// Initialize everyone state with temples and scores
 everyone.state = {temples:temples, scores:scores};
 
+
+// method to update server state in the everyone object
 var updateEveryoneState = function(newName, templeStatus) {
 
   if (!scores[newName]) {
@@ -224,6 +232,8 @@ var updateEveryoneState = function(newName, templeStatus) {
 
 }
 
+// handle new connections by listening on the connect event
+// track the user's successful temple matches by name
 nowjs.on('connect', function(){
 
   if (everyone.newName) {
@@ -248,13 +258,13 @@ nowjs.on('connect', function(){
 
     if (this.now.connectComplete) {
       console.log("Sending Connection confirmation through now.connectComplete");
-
       this.now.connectComplete();
     }
   }
 
 });
 
+// on disconnect event remove the user's name entry
 nowjs.on('disconnect', function(){
   console.log("Left: " + this.now.name);
   if (this.now.name) {
@@ -265,17 +275,23 @@ nowjs.on('disconnect', function(){
   }
 });
 
+// the client calls this method to notify the server of a new chat message
+// the server replies back to all chat clients with the new message
 everyone.now.distributeMessage = function(message){
   console.log('Updating all clients through everyone.now.receiveMessage');
   everyone.now.receiveMessage(this.now.name, message);
 };
 
+// the client calls this method to notify the server of a succesful temple match
+// we record the match for everyone and then send the status to all of the clients
 everyone.now.distributeTempleStatus = function(templeStatus){
   updateEveryoneState(this.now.name, templeStatus);
   console.log('Updating all clients through everyone.now.receiveTempleStatus');
   everyone.now.receiveTempleStatus(this.now.name, templeStatus);
 };
 
+// the client calls this method to update the name entry in everyone and
+// to synchronize it with all of the other clients
 everyone.now.addName = function(newName) {
   console.log('New Name:' + newName);
   everyone.newName = newName;
@@ -286,6 +302,7 @@ everyone.now.addName = function(newName) {
 };
 
 
+// create a fast lookup Trie for matching partial words
 function Trie(vertex) {
   this.root = vertex;
   this.addWord = function(vertex, word) {
@@ -301,6 +318,7 @@ function Trie(vertex) {
     }
   }
 
+  // fast lookup for auto-complete
   this.retrieve = function(prefix) {
     var vertex = this.root;
     while(prefix.length) {
@@ -320,6 +338,7 @@ function Vertex(val) {
   this.val = val;
 }
 
+// List of Temples read from text file
 var countries;
 var fs = require('fs');
 var rootVert = new Vertex('');
@@ -332,6 +351,8 @@ fs.readFile('./public/temples.txt', function(err, data) {
   }
 });
 
+// Method the client calls to determine Auto-complete matches
+// This is an example of calling directly back to the client
 everyone.now.getGuess = function(val) {
   val = val.toLowerCase();
   var guesses = trie.retrieve(val);

@@ -30,6 +30,7 @@
     myPlay = playNow();
 
     var showTab = function (name){
+      $('.container-fluid').toggleClass("all", false);
       $('ul.nav li').removeClass('active');
       $('#' + name).addClass('active');
       $('div.results').addClass('hide');
@@ -55,6 +56,7 @@
     });
 
     $('#all').click(function(e) {
+      $('.container-fluid').toggleClass("all", true);
       $('ul.nav li').removeClass('active');
       $('#all').addClass('active');
       $('div.results').removeClass('hide');
