@@ -15,6 +15,7 @@
 		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 		
 		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="css/ticker.css">
 		<link rel="stylesheet" href="css/theme/default.css">
 
 		<!-- For syntax highlighting -->
@@ -42,15 +43,18 @@
 				<section>
 					<h1>Real Time Web Applications</h1>
 					<h2>With Node.js</h2>
-					<br>
 					<h4>Logan Allred &amp; Joel Thornton</h4>
+					<br>
+          <h6>Connect your Wifi to &nbsp;<code>&nbsp;realtimesort2012 </code> (no password)</h6>
+          <h6>Then go to <code style="font-size: 36px;"><a href="http://192.168.1.101:1947/demo">http://192.168.1.101:1947/demo</a></code>
+            </h6><h6>on your phone, tablet, or laptop</h6>
 				</section>
 				<section>
 					<h3>Presenters</h3>
 					<br><br>
 					<p>Logan Allred</p>
 					<p>
-						<small><i>Front End Developer, FamilySearch
+						<i><small>Front End Developer, FamilySearch
 							<br> <a href="#">allredlt@familysearch.org</a></small></i>
 					</p>
 					<br>
@@ -65,8 +69,8 @@
 					<ul>
 						<li>What are Real-Time Apps?</li>
 						<li>Some Fun Demos</li>
-						<li>Tools Overview</li>
 						<li>Getting Started</li>
+						<li>Tools Overview</li>
 						<li>Let's Build a Real-Time App!</li>
 					</ul>
 				</section>
@@ -74,9 +78,10 @@
 				<section>
 					<h2>What Are Real-Time Web Applications?</h2>
 					<ul>
-						<li>Persistent Connection</li>
+						<li>Persistent Bi-Directional Connection</li>
 						<li>Shared Event Notification</li>
 						<li>Continuous Communication</li>
+						<li>Multiple Data Sources/Event Streams</li>
 					</ul>
 				</section>
 
@@ -101,13 +106,45 @@
 						<li>Collaborative Sharing Applications</li>
 					</ul>
 				</section>
-
+        <section>
+          <h1>How does it work?</h1>
+          <ul>
+            <li>Multiple techniques</li>
+            <li>
+              <ul>
+                <li>Ajax Push</li>
+                <li>Reverse Ajax</li>
+                <li>Two-way-web</li>
+                <li>HTTP Streaming</li>
+                <li>HTTP server push</li>
+                <li>Long-held HTTP request </li>
+                <li>Long Polling</li>
+                <li>Web Sockets</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
 				<section>
 					<section>
 						<h2>Real-Time Samples</h2>
+            <div>
+              <img width="400" height="400" src="img/Kazing.png" alt="ESPN GAMEDAY" style="-webkit-transform: rotate(360deg);float:right;">
+              <img width="400" height="400" src="img/ESPN.png" alt="ESPN GAMEDAY" style="-webkit-transform: rotate(360deg);float:right;">
+            </div>
+						<!-- <a href="#/6/1" class="image">
+							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
+						</a> -->
+					</section>
+          <section>
+						<h2>Real-Time Samples</h2>
 						<p>
 							Real Time applications <a href="#/6/1">Demos</a>.
+
 						</p>
+            <div>
+              <img width="400" height="400" src="img/wordsquared.png" alt="WordSquared" style="-webkit-transform: rotate(360deg);float:right;">
+              <img width="400" height="400" src="img/BrowserQuest.png" alt="BrowserQuest" style="-webkit-transform: rotate(360deg);float:right;">
+            </div>
 						<!-- <a href="#/6/1" class="image">
 							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
 						</a> -->
@@ -115,19 +152,32 @@
 					<section>
 						<h3><a href='http://wordsquared.com'>http://wordsquared.com</a></h3>
 						<h3><a href='http://typewith.me/p/sort2012'>http://typewith.me/p/sort2012</a></h3>
-						<h3><a href='http://demo.kaazing.com/livefeed/'>http://demo.kaazing.com/livefeed/</a></h3>
 						<h3><a href='http://docs.google.com'>docs.google.com</a></h3>
+						<h3><a href='http://demo.kaazing.com/livefeed/'>http://demo.kaazing.com/livefeed/</a></h3>
 						<h3><a href='http://pusher.com/showcase'>pusher.com</a></h3>
 						<h3><a href='http://sports.espn.go.com/nfl/gamecast'>http://sports.espn.go.com/nfl/gamecast</a></h3>
 						<h3><a href='http://browserquest.mozilla.org'>browserquest.mozilla.org</a></h3>
 					</section>
-					<section>
-						<h2>Multiplayer Puzzle Game</h2>
-						<p>Jigsaw Puzzle</p>
-					</section>
-				</section>
+          <section>
+            <h3><a href='http://lab.hakim.se/reveal-js/'>These slides (Reveal.js)</a></h3>
+            <h3><a href='http://balloons.io/'>Balloons.io</a></h3>
+          </section>
+        </section>
 
  				<section> <h2> Let's Build a Real-Time web app </h2>
+         <section>
+           <ul>
+             <li>Simple Chat with NowJS
+               <ul>
+                 <li> create project(e.g http://github.com/thorntonjn/simple_chat.git)</li>
+                 <li> mkdir simple_chat;mkdir simple_chat/bin;cd simple_chat</li>
+                 <li> create package.json </li>
+                 <li> create bin/index.html </li>
+                 <li> create simple_chat.js </li>
+               </ul>
+             </li>
+           </ul>
+         </section>
  					<section>
  					<ul><li>Client Side</li>
 	 				<li><pre><code contenteditable> 
@@ -162,52 +212,57 @@ everyone.now.distributeMessage =
  				</li>
 				</ul> 
  				</section>
- 				</section>
+           <section>
+             <ul>
+               <li> Deploy App </li>
+               <ul> http://nodejitsu.com/paas/getting-started.html
+                 <li>npm install jitsu -g</li>
+                 <li>jitsu signup</li>
+                 <li>jitsu login</li>
+                 <li>jitsu deploy; supply subdomain</li>
+                 <li>jitsu deploy; supply subdomain (e.g. thorntonjn_simple_chat_demo)</li>
+               </ul>
+               </li>
+             </ul>
+           </section>
+         </section>
 				<section>
-					<h2> Tools For Real-Time App Development</h2>
+					<h2> Tools For Real-Time Apps</h2>
 					<section>
-					<ul> 
+					<ul>
 						<li><h3>WebSocket Protocol</h3></li>
 							<ul>
-						<li><h3>SocketIO/SockJS</h3></li>
+						<li><h3>Socket.IO / SockJS</h3></li>
 							</ul>
-						<li><h3>nodejs Real-Time Development Frameworks</h3></li>
+						<li><h3>Node.js Real-Time Development Frameworks</h3></li>
 							<ul>
-						<li><h3>now.js </h3></li>
-						<li><h3>socketstream.js </h3></li>
-						<li><h3>derby.js </h3></li>
-						<li><h3>meteor </h3></li>
-						    </ul>
-	
+						<li><h3>Now.js </h3></li>
+						<li><h3>Derby.js </h3></li>
+            <li><h3>SocketStream.js </h3></li>
+						<li><h3>Meteor </h3></li>
+					</ul>
+
 					</ul>
 					</section>
 					<section>
-						<h1>Node.js</h1>
-						<ul>
-							<li><h3>Asynchronous Event Driven Request Model</h3></li>
-							<li><h3>Server Side Javascript</h3></li>
-							<li><h3>More Consistent Client-Server Synchronization</h3></li>
-							<li><h3>NPM</h3></li>
-							<li><h3>Easier & Faster Build & Deployment</h3></li>
-						<ul>
-					</section>
-					<section>
-						<h1>SOCKET.IO/SOCKJS</h1>
+						<h1>SOCKET.IO / SOCKJS</h1>
 						<ul>
 							<li><h3>Implementation of Websocket Protocol</h3></li>
 							<li><h3>Falls back to comet protocols</h3></li>
 							<li><h3>Provides Client and Server Implementations</h3></li>
-						<ul>
-					</section>
-					<section>
-						<h1>SocketStream</h1>
-						<ul>
-							<li><h3>Simple Modular Framework</h3></li>
-							<li><h3>Dedicated to Real-Time Single-page Apps</h3></li>
-							<li><h3>Designed to Integrate Easily With Other Modules</h3></li>
 						</ul>
 					</section>
-					<section>
+          <section>
+            <h1>Node.js</h1>
+            <ul>
+              <li><h3>Asynchronous Event Driven Request Model</h3></li>
+              <li><h3>Server Side Javascript</h3></li>
+              <li><h3>More Consistent Client-Server Synchronization</h3></li>
+              <li><h3>NPM</h3></li>
+              <li><h3>Easier & Faster Build & Deployment</h3></li>
+            </ul>
+          </section>
+          <section>
 						<h1>Now.js</h1>
 						<ul>
 							<li><h3>Simple Framework</h3></li>
@@ -231,7 +286,7 @@ everyone.now.distributeMessage =
 									<li>server changes or adds variables to the everyone.now pocket </li>
 									<li>passed along to every client's now pocket </li>
 								</ul>
-							</li
+							</li>
 						</ul>
 					</section>
 					<section>
@@ -243,17 +298,6 @@ everyone.now.distributeMessage =
 					</ul>
 					</section>
 					<section>
-						<h1>Meteor</h1>
-						<ul> 
-							<li><h3>Full Stack Application Framework</h3></li>
-							<li><h3>Includes Deployment and Hosting</h3></li>
-							<li><h3>Tightly Integrated - Walled Garden</h3></li>
-							<li><h3>Model synchronization &amp; pub/sub</h3></li>
-							<li><h3>Opinionated</h3></li>
-							<li><h3>Focus on Developer Productivity</h3></li>
-						</ul>
-					</section>
-					<section>
 						<h1>Derby.js</h1>
 						<ul> 
 							<li><h3>Full Stack Application Framework</h3></li>
@@ -263,8 +307,38 @@ everyone.now.distributeMessage =
 							<li><h3>Modularity Provides Flexibility</h3></li>
 						</ul>
 					</section>
-					
-				</section>
+          <section>
+            <h2>Temple Match - GAME</h2>
+            <div>
+              <img width="214" height="128" src="img/latemple.png" alt="Logan wins temple match" style="-webkit-transform: rotate(360deg);float:right;">
+              <img width="214" height="128" src="img/success.jpg" alt="success" style="-webkit-transform: rotate(360deg);float:right;">
+              <img width="214" height="128" src="img/error.jpeg" alt="error" style="-webkit-transform: rotate(360deg);float:right;">
+            </div>
+            <!-- <a href="#/6/1" class="image">
+                    <img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
+                  </a> -->
+          </section>
+          <section>
+            <h1>SocketStream</h1>
+            <ul>
+              <li><h3>Simple Modular Framework</h3></li>
+              <li><h3>Dedicated to Real-Time Single-page Apps</h3></li>
+              <li><h3>Designed to Integrate Easily With Other Modules</h3></li>
+            </ul>
+          </section>
+          <section>
+            <h1>Meteor</h1>
+            <ul>
+              <li><h3>Full Stack Application Framework</h3></li>
+              <li><h3>Includes Deployment and Hosting</h3></li>
+              <li><h3>Tightly Integrated - Walled Garden</h3></li>
+              <li><h3>Model synchronization &amp; pub/sub</h3></li>
+              <li><h3>Opinionated</h3></li>
+              <li><h3>Focus on Developer Productivity</h3></li>
+            </ul>
+          </section>
+
+        </section>
 
 				<section>
 					<section>
@@ -278,12 +352,20 @@ everyone.now.distributeMessage =
 					</ul>
 					</section>
 					<section>
-						<h1>Frameworks and Tools</h1>
+						<h3>Hosted Services</h3>
 						<ul>
-							<li><h3>NodeJS</h3></li>
-							<li><h3>Derby</h3></li>
-							<li><h3>Heroku</h3></li>
+							<li><a href="http://pusher.com/">Pusher</a></li>
+							<li><a href="http://pubnub.com/">PubNum</a></li>
+							<li><a href="http://kaazing.com/">Kaazing.com</a></li>
+							<li><a href="http://realtime.co/">Realtime</a></li>
+						</ul>
+            <br><br>
+						<h3>Cloud hosting</h3>
 						<ul>
+							<li><a href="http://nodejitsu.com/">Nodejitsu</a></li>
+							<li><a href="http://nodester.com/">Nodester / AppFog</a></li>
+							<li><a href="http://heroku.com/">heroku.com</a><br>&nbsp;&nbsp;&nbsp;(doesn't support web sockets yet)</li>
+						</ul>
 					</section>
 					<section>
 						<h2>Server Code</h2>
@@ -343,6 +425,7 @@ git push heroku replace with real commands
 					<br>
 					<br>
 					<br>
+					<h3><a href="http://github.com/redbugz/sort2012/">http://github.com/redbugz/sort2012/</a></h3>
 					<br>
 					<br>
 					<p>
@@ -528,6 +611,10 @@ function linkify( selector ) {
 				<a class="down" href="#">&#x25BC;</a>
 			</aside>
 
+      <div id="chat-ticker" class="ticker">
+        <span class="author">Logan &amp; Joel</span>
+        <span class="chat-message">Join the live chat! Your messages will appear here.</span>
+      </div>
 			<!-- Presentation progress bar -->
 			<div class="progress"><span></span></div>
 			
@@ -554,7 +641,7 @@ function linkify( selector ) {
 					{ src: 'lib/js/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 					{ src: 'lib/js/data-markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 					{ src: 'socket.io/socket.io.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } },
-					{ src: 'plugin/speakernotes/client.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } },
+					{ src: 'plugin/speakernotes/client.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } }
 				]
 			});
 			
