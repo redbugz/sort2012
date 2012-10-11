@@ -1,0 +1,36 @@
+{
+  "auth": {
+    "twitter": {
+      "consumerkey" : "yourConsumerKey",
+      "consumersecret" : "yourSecretKey",
+      "callback" : "http://192.168.1.100:6789/auth/twitter/callback"
+    },
+    "facebook": {
+      "clientid" : "yourClientID",
+      "clientsecret" : "yourClientSecret",
+      "callback" : "http://102.168.1.100:6789/auth/facebook/callback"
+    },
+    "familysearch": {
+      "clientid" : "NNNN-NNNN-NNNN-NNNN-NNNN-NNNN-NNNN-NNNN",
+      "callback" : "https://fs-chat.jit.su/auth/familysearch/callback",
+      "reference" : "https://beta.familysearch.org/"
+    }
+  },
+  "theme": {
+    "name" : "default"
+  },
+  "session" : {
+    "secret" : "mybestsecretcode"
+  },
+  "app": {
+    "port": 6789
+  },
+  "redis": {
+    "hostname": "carp.redistogo.com",
+    "port": "9647",
+    "password": "e9fa8ac484f536b8cdeeba6fea5fab20",
+    "options": {
+      "parser": "javascript"
+    }
+  }
+}

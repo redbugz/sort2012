@@ -1,0 +1,49 @@
+!!!
+head
+  link(rel="stylesheet", href="/style/main.css")
+  script(src= "/javascript/jquery.1.7.2.js")
+  script(src= "/javascript/jquery.ui.js")
+  script(src= "/javascript/jquery.ui.touch.0.2.2.js")
+  script(src= "/javascript/_.1.3.3.js")
+  script(src= "/socket.io/socket.io.js")
+  script
+    var socket = io.connect('/');
+  script(src = "/javascript/magnets.js")
+body
+  #header
+    #sub_header
+      .inner
+        #logo.left MagBoard
+        a#add_word.right.no_select.btn.green + Add a Word
+        a#clear_words.right.no_select.btn - Clear All Words
+        #stats.right
+          #people_online.right.stat_hold
+            span.count
+            span.words online
+          #word_count.right.stat_hold
+            span.count= Object.keys(words).length
+            span.words words on board
+        .cl
+  !=body
+  #add_word_form.inactive(style="display: none")
+    .inner
+      input(type="text", placeholder="your word?").center
+      br
+      a.btn.no_select.green.right.add + Add It
+      a.btn.no_select.red.right.close - Nevermind
+      .cl
+      | OR Add an Article of Faith:
+      .aof-buttons
+        a.btn.no_select.small.green(data-aof=1) 1
+        a.btn.no_select.small.green(data-aof=2) 2
+        a.btn.no_select.small.green(data-aof=3) 3
+        a.btn.no_select.small.green(data-aof=4) 4
+        a.btn.no_select.small.green(data-aof=5) 5
+        a.btn.no_select.small.green(data-aof=6) 6
+        a.btn.no_select.small.green(data-aof=7) 7
+        a.btn.no_select.small.green(data-aof=8) 8
+        a.btn.no_select.small.green(data-aof=9) 9
+        a.btn.no_select.small.green(data-aof=10) 10
+        a.btn.no_select.small.green(data-aof=11) 11
+        a.btn.no_select.small.green(data-aof=12) 12
+        a.btn.no_select.small.green(data-aof=13) 13

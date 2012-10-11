@@ -1,0 +1,19 @@
+{
+  "name": "sort2012magnets",
+  "version": "0.0.1-23",
+  "author": "redbugz@gmail.com",
+  "dependencies": {
+    "express": "2.5.8",
+    "jade": "git://github.com/visionmedia/jade.git",
+    "stylus": ">=0.0.1",
+    "socket.io": ">=0.9.6",
+    "mongoose": "latest"
+  },
+  "engines": {
+    "node": "0.6.x"
+  },
+  "subdomain": "sort2012magnets",
+  "scripts": {
+    "start": "server.js"
+  }
+}

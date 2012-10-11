@@ -1,0 +1,1 @@
+Simplified demo of https://github.com/SpringSource/cloudfoundry-samples/tree/master/ticker-analysis/node-ticker-analysis
